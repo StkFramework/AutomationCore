@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+       	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        
+   
+	<bean id ="cucumberCommonUIStepsAdapter"  class="com.softtek.automation.steps.cucumber.CucumberCommonUIStepsAdapter">
+		<property name="UIActions" ref="IUActions" />	
+		<property name="UIElementFactory" ref="UIElementFactory" />		
+	</bean>	
+	
+	<bean id ="UIElementFactory"  class="com.softtek.automation.element.BasicUIElementFactory">
+		<property name="viewsSource" ref="viewSourcesPath" />						
+	</bean>
+	
+	<bean id ="IUActions"  class="com.softtek.automation.actions.selenium.SeleniumUIActions">	
+		<property name="testDriver" ref="testDriver" />					
+	</bean>
+	
+	<bean id ="testDriver"  class="com.softtek.automation.driver.selenium.SeleniumDriver">	
+		<property name="properties">
+			<props>
+				<prop key="driver">${driver}</prop>
+				<prop key="browser">${browser}</prop>			
+			</props>
+		</property>				
+	</bean>	
+	
+	<bean id ="cucumberCommonAppStepsAdapter"  class="com.softtek.automation.steps.cucumber.CucumberCommonAppStepsAdapter">
+		<property name="AppActions" ref="seleniumAppActions" />
+		<property name="ExecutionContext" ref="ExecutionContext" />		
+	</bean>
+	
+	<bean id ="AppActions"  class="com.softtek.automation.actions.selenium.SeleniumAppActions">
+		<property name="testDriver" ref="testDriver" />
+		<property name="applicationsSet" ref="applicationsSet" />		
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+</beans>
