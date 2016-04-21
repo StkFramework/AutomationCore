@@ -19,7 +19,7 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 	private static final String FIREFOX = "firefox";
 	private static final String IE = "ie";
 	private static final String WEB_DRIVER = "webdriver";
-	private static final String GRID_DRIVER = "webdriver";
+	private static final String GRID_DRIVER = "grid";
 
 	private String browser;
 	private String driverType;
