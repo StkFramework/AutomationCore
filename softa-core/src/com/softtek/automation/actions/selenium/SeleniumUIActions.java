@@ -138,6 +138,17 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 	
+	@Override
+	public ExecutionResult SelectValueFromDropdownElement(UIElement element, String text) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		return null;
+	}
 	
 	/* BE CAREFUL: Dont remove or delete this private methods*/
 
@@ -195,7 +206,7 @@ public class SeleniumUIActions implements UIActions {
 		return webElement;
 	}
 
-	public void isElementDisplayed(UIElement uiElement, WebElement webElement, ExecutionResult result) {
+	private void isElementDisplayed(UIElement uiElement, WebElement webElement, ExecutionResult result) {
 
 		try {
 
@@ -211,16 +222,6 @@ public class SeleniumUIActions implements UIActions {
 
 	}
 
-	@Override
-	public ExecutionResult SelectValueFromDropdownElement(UIElement element, String text) {
-		
-		ExecutionResult executionResult = new ExecutionResult();
-
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
-
-		isElementDisplayed(element, webElement, executionResult);
-		
-		return null;
-	}
+	
 
 }
