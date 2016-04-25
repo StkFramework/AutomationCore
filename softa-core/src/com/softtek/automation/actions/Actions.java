@@ -4,8 +4,8 @@ import com.softtek.automation.driver.TestDriver;
 
 public interface Actions {
 
-	void setTestDriver(TestDriver testDriver);
+	void setTestDriver(TestDriver<?> testDriver);
 
-	TestDriver getTestDriver();
+	TestDriver<?> getTestDriver();
 
 }

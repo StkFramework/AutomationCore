@@ -22,6 +22,8 @@ public interface AppActions extends Actions {
 
 	ExecutionResult CloseApp(String name);
 
-	ExecutionResult CloseCurrentApp(String name);
+	ExecutionResult CloseCurrentApp();
+	
+	ExecutionResult WaitForSeconds(String seconds) throws Exception;
 
 }

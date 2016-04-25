@@ -12,4 +12,6 @@ public interface UIActions extends Actions {
 	public ExecutionResult ElementContainsText(UIElement element, String text);
 
 	public ExecutionResult TypeTextOnElement(UIElement element, String text);
+
+	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
 }

@@ -17,20 +17,37 @@ public abstract class AbstractSteps {
 		this.ExecutionContext = executionContext;
 	}
 
-	protected void assertTrue(ExecutionResult execution) {
+	protected Object assertTrue(ExecutionResult execution) {
 		Assert.assertTrue(execution.getMessage(), execution.isValidResult());
+		return execution.getObjectResult();
 	}
 
 	protected void assertTrue(boolean result, String message) {
 		Assert.assertTrue(message, result);
 	}
-
-	protected void assertFalse(ExecutionResult execution) {
+	
+	protected Object assertFalse(ExecutionResult execution) {
 		Assert.assertFalse(execution.getMessage(), execution.isValidResult());
+		return execution.getObjectResult();
 	}
 
 	protected void assertFalse(boolean result, String message) {
 		Assert.assertTrue(message, result);
 	}
+	
+	protected void putInVolatileContext(String key, Object object ){		
+		ExecutionContext.putElement(key, object);
+	}
+	
+	protected void putInCacheContext(String key, Object object ){		
+		ExecutionContext.putElementOnCache(key, object);
+	}
 
+	protected Object getFromVolatileContext(String key){
+		return ExecutionContext.getElement(key);
+	}
+	
+	protected Object getFromCacheContext(String key){
+		return ExecutionContext.getElementFromChache(key);
+	}
 }

@@ -1,5 +1,7 @@
 package com.softtek.automation.steps;
 
+import com.softtek.automation.ConstantsUtils;
+import com.softtek.automation.ExecutionResult;
 import com.softtek.automation.actions.AppActions;
 
 public class AbstractCommonAppSteps extends AbstractSteps {
@@ -28,7 +30,13 @@ public class AbstractCommonAppSteps extends AbstractSteps {
 	protected void closeApp(String name) {
 	}
 
-	protected void closeCurrentApp(String name) {
+	protected void closeCurrentApp() {
+		assertTrue(AppActions.CloseCurrentApp());
 	}
 
+
+	public void waitForSeconds(String seconds) throws Exception {
+		assertTrue(AppActions.WaitForSeconds(seconds));
+	}
+	
 }

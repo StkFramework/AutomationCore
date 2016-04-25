@@ -17,8 +17,14 @@ public class CucumberCommonAppStepsAdapter extends AbstractCommonAppSteps {
 		this.openDefault();
 	}
 
+	
 	@When("^(?i:I wait) '([0-9]*)' (?i:seconds)$")
-	public void type_text_in_input_field(final String seconds) throws InterruptedException {
-		Thread.sleep(Integer.parseInt(seconds) * ConstantsUtils.TIME_SLEEP_1x);
+	public void i_wait_seconds(final String seconds) throws Exception {
+		this.waitForSeconds(seconds);
+	}
+	
+	@When("^(?i:I close current application)$")
+	public void i_close_current_application() {
+		this.closeCurrentApp();;
 	}
 }

@@ -2,11 +2,17 @@ package com.softtek.automation.actions.selenium;
 
 import java.util.List;
 
+
+import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.softtek.automation.Application;
 import com.softtek.automation.ApplicationsSet;
+import com.softtek.automation.ConstantsUtils;
 import com.softtek.automation.ExecutionResult;
+import com.softtek.automation.TestLogger;
 import com.softtek.automation.actions.AppActions;
 import com.softtek.automation.driver.TestDriver;
 import com.softtek.automation.driver.selenium.SeleniumDriver;
@@ -14,20 +20,20 @@ import com.softtek.automation.driver.selenium.SeleniumDriver;
 public class SeleniumAppActions implements AppActions {
 
 	@Autowired
-	private TestDriver<SeleniumDriver> testDriver;
+	private TestDriver<WebDriver> testDriver;
 
 	private ApplicationsSet applicationsSet;
 
-	private Application application;
+	private Application currentApplication;
 
 	@Override
 	public Application getApplication() {
-		return this.application;
+		return this.currentApplication;
 	}
 
 	@Override
 	public void setApplication(Application application) {
-		this.application = application;
+		this.currentApplication = application;
 
 	}
 
@@ -49,34 +55,44 @@ public class SeleniumAppActions implements AppActions {
 	}
 
 	@Override
-	public TestDriver getTestDriver() {
+	public TestDriver<WebDriver> getTestDriver() {
 		return this.testDriver;
 	}
 
 	@Override
 	public ExecutionResult OpenApplication(String application) {
 
-		// ExecutionResult result = null;
-
-		System.out.println("Processing OpenApplication ...");
+		ExecutionResult result = new ExecutionResult();
+		boolean applicationFound = false;
+		
+		TestLogger.INFO(this, "OpenApplication::" +  application);
 
 		List<Application> applicationsList = applicationsSet.getApplications();
-		for (Application app : applicationsList) {
+				
+		for (Application app : applicationsList) {			
+			if (application.equals(app.getName())) {				
+				
+				testDriver.getDriverInstance().manage().window().maximize();
+				testDriver.getDriverInstance().manage().deleteAllCookies();
 
-			System.out.println("app.getName-> " + app.getName());
-			if (application.equals(app.getName())) {
-				testDriver.getDriverInstance().getDriverInstance().manage().window().maximize();
-				testDriver.getDriverInstance().getDriverInstance().manage().deleteAllCookies();
+				TestLogger.INFO(this, "application.environment:: " + app.getEnvironment());
+				TestLogger.INFO(this,"application.properties:: " + app.getProperties());
 
-				System.out.println("url-> " + app.getProperties().get("url.").toString() + app.getEnvironment());
-
-				testDriver.getDriverInstance().getDriverInstance().get(
-						app.getProperties().get("url.").toString() + app.getEnvironment());
+				testDriver.getDriverInstance().get(
+						app.getProperties().get("url."+ app.getEnvironment()).toString());
+			
+				applicationFound = true;
+				break;
 			}
-
 		}
 
-		return new ExecutionResult(true, "");
+		if(applicationFound == false){
+			result.setResult(false);
+			result.setMessage("Aplication \"" + application +"\" can't be opened. There isn't a definition.");
+			TestLogger.ERROR(this, result.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -93,14 +109,21 @@ public class SeleniumAppActions implements AppActions {
 
 	@Override
 	public ExecutionResult CloseApp(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		testDriver.getDriverInstance().close();
+		return new ExecutionResult(true,null);
 	}
 
 	@Override
-	public ExecutionResult CloseCurrentApp(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public ExecutionResult CloseCurrentApp() {
+		testDriver.getDriverInstance().close();
+		return new ExecutionResult(true,null);
 	}
 
+	@Override
+	public ExecutionResult WaitForSeconds(String seconds) throws Exception {
+		Thread.sleep( Integer.parseInt(seconds) * ConstantsUtils.TIME_SLEEP_1x );
+		return new ExecutionResult(true,null);
+	}
+
+	
 }

@@ -24,8 +24,8 @@ public class ExecutionContext {
 		return internalCache.remove(key);
 	}
 
-	public void putElementOnCache() {
-		// tbd
+	public void putElementOnCache(String key, Object object) {
+		internalCache.put(key, object);
 	}
 
 	public Object getElement(String key) {

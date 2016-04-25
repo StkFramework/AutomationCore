@@ -11,4 +11,14 @@ public class TestLogger {
 		LOGGER = LoggerFactory.getLogger(object.getClass());
 		LOGGER.debug(message);
 	}
+	
+	public static void ERROR(Object object, String message) {
+		LOGGER = LoggerFactory.getLogger(object.getClass());
+		LOGGER.error(message);
+	}
+	
+	public static void INFO(Object object, String message) {
+		LOGGER = LoggerFactory.getLogger(object.getClass());
+		LOGGER.info(message);
+	}
 }

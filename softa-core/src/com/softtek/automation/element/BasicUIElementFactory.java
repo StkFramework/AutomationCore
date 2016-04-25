@@ -25,23 +25,26 @@ public class BasicUIElementFactory implements UIElementFactory {
 
 			resultElement = createUIElementInstance(processClassName(idElement), processClassFieldName(idElement));
 
+		}else{
+			throw new Exception("Not valid format for element: \"" + idElement + "\"");
 		}
 
 		return resultElement;
 	}
 
 	private boolean isValidFormat(String idElement) {
-		return idElement.split(".").length == 2;
+		System.out.println("idElement.split.length -> " + idElement.split("\\.").length);
+		return idElement.split("\\.").length == 2;
 	}
 
 	private String processClassFieldName(String idElement) {
 
-		return idElement.split(".")[1];
+		return idElement.split("\\.")[1];
 	}
 
 	private Class<?> processClassName(String idElement) throws Exception {
 
-		String className = idElement.split(".")[0];
+		String className = idElement.split("\\.")[0];
 
 		Class<?> clazz;
 
@@ -75,14 +78,19 @@ public class BasicUIElementFactory implements UIElementFactory {
 	private UIElement getUIElementFromViewFields(String field, Object viewStructure) throws Exception {
 
 		UIElement uiElement = null;
-
+		boolean fieldFound = false;
 		Field[] fields = viewStructure.getClass().getDeclaredFields();
-
+		//System.out.println("field -> " + field);
+		
 		for (Field f : fields) {
 			try {
-
-				if (field.equals(f.getName())) {
-
+				//System.out.println("f.getName()->" + f.getName());
+				
+				if (field.equals(f.getName())) {	
+					//System.out.println("field == f -> true");
+					
+					fieldFound = true;
+					
 					f.setAccessible(true);
 
 					ElementMap elementMap = f.getAnnotation(ElementMap.class);
@@ -93,9 +101,10 @@ public class BasicUIElementFactory implements UIElementFactory {
 					uiElement.setId(f.getName());
 					uiElement.setUsing(elementMap.using());
 					uiElement.setValue(null);
+					break;
 
-				}
-
+				}			
+				
 			}
 			catch (Exception e) {
 				throw new Exception("The field [" + f.getName() + "] in class ["
@@ -104,7 +113,15 @@ public class BasicUIElementFactory implements UIElementFactory {
 			}
 		}
 
+		if(fieldFound == false){
+			throw new Exception("Field \"" + field + "\" doesn't exists in class \"" + viewStructure.getClass().getName() + "\""  );
+		}
+		
+		
+		
 		return uiElement;
 	}
 
+	
+	
 }

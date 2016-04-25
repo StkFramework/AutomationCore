@@ -3,6 +3,7 @@ package com.softtek.automation.actions.selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,7 +18,7 @@ import com.softtek.automation.element.UIElement;
 public class SeleniumUIActions implements UIActions {
 
 	@Autowired
-	private TestDriver<SeleniumDriver> testDriver;
+	private TestDriver<WebDriver> testDriver;
 
 	@Override
 	public void setTestDriver(TestDriver testDriver) {
@@ -136,6 +137,9 @@ public class SeleniumUIActions implements UIActions {
 
 		return executionResult;
 	}
+	
+	
+	/* BE CAREFUL: Dont remove or delete this private methods*/
 
 	private WebElement findWebElement(UIElement element) {
 		By by = null;
@@ -157,19 +161,23 @@ public class SeleniumUIActions implements UIActions {
 				by = By.tagName(element.getUsing());
 				break;
 
+			case NAME:	
+				by = By.name(element.getUsing());
+				break;
+				
 			default:
-				By.xpath(element.getUsing());
+				by = By.xpath(element.getUsing());
 				break;
 		}
 
-		return testDriver.getDriverInstance().getDriverInstance().findElement(by);
+		return testDriver.getDriverInstance().findElement(by);
 
 	}
 
 	private WebElement waitForElement(UIElement uiElement, WebElement webElement, Long timeOutInSeconds,
 			ExecutionResult result) {
 
-		WebDriverWait wait = new WebDriverWait(testDriver.getDriverInstance().getDriverInstance(), timeOutInSeconds);
+		WebDriverWait wait = new WebDriverWait(testDriver.getDriverInstance(), timeOutInSeconds);
 
 		try {
 			wait.until(ExpectedConditions.visibilityOf(webElement));
@@ -201,6 +209,18 @@ public class SeleniumUIActions implements UIActions {
 
 		}
 
+	}
+
+	@Override
+	public ExecutionResult SelectValueFromDropdownElement(UIElement element, String text) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		return null;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.softtek.automation.TestLogger;
 import com.softtek.automation.driver.TestDriver;
 
 public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver> {
@@ -32,13 +33,13 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 	@PostConstruct
 	public void setUpDriver() {
 
-		System.out.println("SettingUp Testdriver ...");
+		TestLogger.INFO(this,"Setting up Testdriver ...");
 
 		this.driverType = properties.getProperty("driverType");
 		this.browser = properties.getProperty("browser");
 
-		System.out.println("Start AutomationDriver as type : " + driverType);
-		System.out.println("Start configuration for browser : " + browser);
+		TestLogger.INFO(this, "Starting AutomationDriver as type: " + driverType);
+		TestLogger.INFO(this, "Starting configuration for browser : " + browser);
 
 		try {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
