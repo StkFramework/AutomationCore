@@ -28,6 +28,7 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.typeTextOnElement(this.UIElementFactory.createElement(element), text);		
 	}
 	
+<<<<<<< HEAD
 	@When("^(?i:Element) '(.+)' (?i:is disable)$")
 	public void element_is_disable(String element) throws Exception {		
 		this.isDisable(UIElementFactory.createElement(element));		
@@ -53,4 +54,25 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.GetSelectedValue(value,UIElementFactory.createElement(element));		
 	}
 	
+	@When("^(?i:Element) '(.+)' (?i:is enabled)$")
+	public void element_is_enabled(String element) throws Exception {		
+		this.elementIsEnabled(this.UIElementFactory.createElement(element));		
+	}
+	
+	@When("^(?i:Element) '(.+)' (?i:is type:) '(.+)'$")
+	public void element_is_type_of(String element, String tagType) throws Exception {		
+		this.elementIsTypeOf(this.UIElementFactory.createElement(element), tagType);		
+	}
+	
+	@When("^(?i:I move the mouse over the element) '(.+)'$")
+	public void move_mouse_over_element(String element) throws Exception {		
+		this.moveMouseOverElement(this.UIElementFactory.createElement(element));		
+	}
+	
+	@When("^(?i:Element) '(.+)' (?i:has the focus)$")
+	public void element_has_focus(String element) throws Exception {		
+		this.elementHasFocus(this.UIElementFactory.createElement(element));		
+	}
+
+
 }
