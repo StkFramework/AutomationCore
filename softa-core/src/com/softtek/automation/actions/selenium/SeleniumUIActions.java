@@ -5,7 +5,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -219,6 +221,125 @@ public class SeleniumUIActions implements UIActions {
 		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
 
 		isElementDisplayed(element, webElement, executionResult);
+		
+		return null;
+	}
+
+	@Override
+	public ExecutionResult IsDisable(UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		if (executionResult.isValidResult()) {
+
+				executionResult.setResult(!webElement.isEnabled());
+				executionResult.setMessage(
+						executionResult.isValidResult() ? null : new StringBuilder()
+								.append("Element ")
+								.append(element.getId())
+								.append(" is NOT disable").toString());
+
+		}
+		
+		return executionResult;
+	}
+
+	@Override
+	public ExecutionResult VerifyMaxLengthText(UIElement element, int length) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		if (executionResult.isValidResult()){
+			executionResult.setResult(webElement.getAttribute("size").equals(Integer.toString(length)));
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT matching with the max length").toString());
+		}
+		
+		return executionResult;
+	}
+
+	@Override
+	public ExecutionResult IsSelected(UIElement element) {
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		if(executionResult.isValidResult()){
+			executionResult.setResult(webElement.isSelected());
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT been selected").toString());
+
+		}
+		
+		return executionResult;
+	}
+	
+	@Override
+	public ExecutionResult MoveFocusTo(UIElement element){
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		if("input".equals(webElement.getTagName())){
+			webElement.sendKeys("");
+		}
+		else{
+			new Actions(testDriver.getDriverInstance()).moveToElement(webElement).perform();
+		}
+		
+		if(executionResult.isValidResult()){
+			executionResult.setResult(webElement.equals(testDriver.getDriverInstance().switchTo().activeElement()));
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT in focus").toString());
+		}
+		
+		return executionResult;
+	}
+
+	@Override
+	public ExecutionResult GetSelectedValue(String value, UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		Select dropdownList = new Select(webElement);
+		
+		dropdownList.selectByVisibleText(value);
+		
+		String selectedOption = dropdownList.getFirstSelectedOption().getAttribute("value");
+		
+		if(executionResult.isValidResult()){
+			executionResult.setResult(selectedOption.equals(value));
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT get the value from dropdown").toString());
+		}
 		
 		return null;
 	}

@@ -41,6 +41,26 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void typeTextOnElement(UIElement element, String text) {
 		assertTrue(UIActions.TypeTextOnElement(element, text));
 	}
+	
+	protected void isDisable(UIElement element){
+		assertTrue(UIActions.IsDisable(element));
+	}
+	
+	protected void VerifyMaxLengthText(UIElement element, int length){
+		assertTrue(UIActions.VerifyMaxLengthText(element, length));
+	}
+	
+	protected void IsSelected(UIElement element){
+		assertTrue(UIActions.IsSelected(element));
+	}
+	
+	protected void MoveFocusTo(UIElement element){
+		assertTrue(UIActions.MoveFocusTo(element));
+	}
+	
+	protected void GetSelectedValue(String value, UIElement element){
+		assertTrue(UIActions.GetSelectedValue(value, element));
+	}
 
 		
 }

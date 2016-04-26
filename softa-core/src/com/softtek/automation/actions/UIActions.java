@@ -14,4 +14,14 @@ public interface UIActions extends Actions {
 	public ExecutionResult TypeTextOnElement(UIElement element, String text);
 
 	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
+	
+	public ExecutionResult IsDisable(UIElement element);
+	
+	public ExecutionResult VerifyMaxLengthText(UIElement element, int length);
+	
+	public ExecutionResult IsSelected(UIElement element);
+	
+	public ExecutionResult MoveFocusTo(UIElement element);
+	
+	public ExecutionResult GetSelectedValue(String value, UIElement element);
 }
