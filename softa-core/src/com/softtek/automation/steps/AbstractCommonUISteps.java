@@ -45,5 +45,17 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void elementIsEnabled(UIElement element) {
 		assertTrue(UIActions.ElementIsEnabled(element));
 	}
+	
+	protected void elementIsTypeOf(UIElement element, String tagType) {
+		assertTrue(UIActions.ElementIsTypeOf(element, tagType));
+	}
+	
+	protected void moveMouseOverElement(UIElement element) {
+		assertTrue(UIActions.MoveMouseOverElement(element));
+	}
+	
+	protected void elementHasFocus(UIElement element) {
+		assertTrue(UIActions.ElementHasFocus(element));
+	}
 		
 }

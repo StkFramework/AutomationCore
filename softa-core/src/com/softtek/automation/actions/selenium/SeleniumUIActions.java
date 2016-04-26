@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,6 +151,88 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 	
+	@Override
+	public ExecutionResult ElementIsEnabled(UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		if (executionResult.isValidResult()) {
+
+			executionResult.setResult(webElement.isEnabled());
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT enabled").toString());
+		}
+		return executionResult;
+	}
+	
+	@Override
+	public ExecutionResult ElementIsTypeOf(UIElement element, String tagType) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		if (executionResult.isValidResult()) {
+			executionResult.setResult(webElement.getTagName().equalsIgnoreCase(tagType));
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT the tag specified, the correct tag is: ")
+							.append(webElement.getTagName()).toString());
+		}
+		return executionResult;
+	}
+	
+	@Override
+	public ExecutionResult MoveMouseOverElement(UIElement element) {
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		if (executionResult.isValidResult()) {
+			Actions builder = new Actions(testDriver.getDriverInstance());
+			Actions hoverOverRequest = builder.moveToElement(webElement);
+			hoverOverRequest.perform();
+		}
+		else {
+				executionResult.setMessage(new StringBuilder("Element \"")
+						.append(element.getId())
+						.append("\" is not Displayed in order to perform the action.").toString());
+		}
+		return executionResult;
+	}
+	
+	@Override
+	public ExecutionResult ElementHasFocus(UIElement element) {
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		if (executionResult.isValidResult()) {
+			executionResult.setResult(webElement.equals(testDriver.getDriverInstance().switchTo().activeElement()));
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT in focus").toString());
+		}
+		return executionResult;
+	}
+	
 	/* BE CAREFUL: Dont remove or delete this private methods*/
 
 	private WebElement findWebElement(UIElement element) {
@@ -221,30 +304,22 @@ public class SeleniumUIActions implements UIActions {
 		}
 
 	}
-
-	
-
-	@Override
-	public ExecutionResult ElementIsEnabled(UIElement element) {
 		
-		ExecutionResult executionResult = new ExecutionResult();
+	private String getAttribute(UIElement uiElement, WebElement webElement, ExecutionResult result, String attributeType){
+		try {
 
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
-
-		isElementDisplayed(element, webElement, executionResult);
-		
-		if (executionResult.isValidResult()) {
-
-			executionResult.setResult(!webElement.isEnabled());
-			executionResult.setMessage(
-					executionResult.isValidResult() ? null : new StringBuilder()
-							.append("Element ")
-							.append(element.getId())
-							.append(" is NOT enabled \"").toString());
+			result.setResult(webElement.isDisplayed());
+		}
+		catch (final StaleElementReferenceException | NoSuchElementException e) {
+			result.setResult(false);
+			result.setMessage(new StringBuilder("Element \"").append("\"").append(uiElement).append(
+					"\" is not attached at DOM.").toString());
+			result.setError(e);
 
 		}
-		
-		return executionResult;
+		return webElement.getAttribute(attributeType.toLowerCase());
 	}
 
+	
+	
 }

@@ -16,4 +16,10 @@ public interface UIActions extends Actions {
 	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
 
 	public ExecutionResult ElementIsEnabled(UIElement element);
+
+	public ExecutionResult ElementIsTypeOf(UIElement element, String tagType);
+
+	public ExecutionResult MoveMouseOverElement(UIElement element);
+
+	public ExecutionResult ElementHasFocus(UIElement element);
 }
