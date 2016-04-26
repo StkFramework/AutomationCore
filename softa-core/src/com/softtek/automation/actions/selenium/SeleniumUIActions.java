@@ -223,4 +223,27 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 
+	@Override
+	public ExecutionResult ElementIsEnabled(UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		if (executionResult.isValidResult()) {
+
+			executionResult.setResult(!webElement.isEnabled());
+			executionResult.setMessage(
+					executionResult.isValidResult() ? null : new StringBuilder()
+							.append("Element ")
+							.append(element.getId())
+							.append(" is NOT enabled \"").toString());
+
+		}
+		
+		return executionResult;
+	}
+
 }

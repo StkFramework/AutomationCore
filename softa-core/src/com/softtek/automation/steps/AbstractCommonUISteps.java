@@ -41,6 +41,9 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void typeTextOnElement(UIElement element, String text) {
 		assertTrue(UIActions.TypeTextOnElement(element, text));
 	}
-
+	
+	protected void elementIsEnabled(UIElement element) {
+		assertTrue(UIActions.ElementIsEnabled(element));
+	}
 		
 }

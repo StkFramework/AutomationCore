@@ -25,5 +25,10 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	public void i_type_text_on(String text,String element) throws Exception {
 		this.typeTextOnElement(this.UIElementFactory.createElement(element), text);		
 	}
+	
+	@When("^(?i:Element) '(.+)' (?i:is enabled)$")
+	public void element_is_enabled(String element) throws Exception {		
+		this.elementIsEnabled(this.UIElementFactory.createElement(element));		
+	}
 
 }
