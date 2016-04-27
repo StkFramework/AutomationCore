@@ -28,7 +28,6 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.typeTextOnElement(this.UIElementFactory.createElement(element), text);		
 	}
 	
-<<<<<<< HEAD
 	@When("^(?i:Element) '(.+)' (?i:is disable)$")
 	public void element_is_disable(String element) throws Exception {		
 		this.isDisable(UIElementFactory.createElement(element));		
@@ -49,11 +48,6 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.MoveFocusTo(UIElementFactory.createElement(element));		
 	}
 	
-	@And("^(?i:Get) '(.+)' (?i:value from) '(.+)' (?i:dropdown)$")
-	public void get_value_from_dropdown(String value, String element) throws Exception {		
-		this.GetSelectedValue(value,UIElementFactory.createElement(element));		
-	}
-	
 	@When("^(?i:Element) '(.+)' (?i:is enabled)$")
 	public void element_is_enabled(String element) throws Exception {		
 		this.elementIsEnabled(this.UIElementFactory.createElement(element));		
@@ -72,6 +66,11 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	@When("^(?i:Element) '(.+)' (?i:has the focus)$")
 	public void element_has_focus(String element) throws Exception {		
 		this.elementHasFocus(this.UIElementFactory.createElement(element));		
+	}
+	
+	@And("^(?i:Select value) '(.+)' (?i:from list) '(.+)'$")
+	public void select_value_from_list(String value, String list) throws Exception{
+		this.SelectListElement(value, this.UIElementFactory.createElement(list));
 	}
 
 

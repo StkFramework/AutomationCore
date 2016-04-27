@@ -42,7 +42,6 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.TypeTextOnElement(element, text));
 	}
 	
-<<<<<<< HEAD
 	protected void isDisable(UIElement element){
 		assertTrue(UIActions.IsDisable(element));
 	}
@@ -58,12 +57,7 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void MoveFocusTo(UIElement element){
 		assertTrue(UIActions.MoveFocusTo(element));
 	}
-	
-	protected void GetSelectedValue(String value, UIElement element){
-		assertTrue(UIActions.GetSelectedValue(value, element));
-	}
 
-=======
 	protected void elementIsEnabled(UIElement element) {
 		assertTrue(UIActions.ElementIsEnabled(element));
 	}
@@ -79,6 +73,9 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void elementHasFocus(UIElement element) {
 		assertTrue(UIActions.ElementHasFocus(element));
 	}
->>>>>>> 7922494d20b000739ddd94496ee99ed7411a7739
+	
+	protected void SelectListElement(String value, UIElement element){
+		assertTrue(UIActions.SelectListElement(value, element));
+	}
 		
 }
