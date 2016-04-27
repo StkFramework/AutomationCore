@@ -28,7 +28,6 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.typeTextOnElement(this.UIElementFactory.createElement(element), text);		
 	}
 	
-<<<<<<< HEAD
 	@When("^(?i:Element) '(.+)' (?i:is disable)$")
 	public void element_is_disable(String element) throws Exception {		
 		this.isDisable(UIElementFactory.createElement(element));		
@@ -72,6 +71,11 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	@When("^(?i:Element) '(.+)' (?i:has the focus)$")
 	public void element_has_focus(String element) throws Exception {		
 		this.elementHasFocus(this.UIElementFactory.createElement(element));		
+	}
+	
+	@When("^(?i:Element) '(.+)' (?i:list is ordered) '(.+)'$")
+	public void element_is_ordered(String element, String orderType) throws Exception {		
+		this.elementIsOrdered(this.UIElementFactory.createElement(element), orderType);		
 	}
 
 

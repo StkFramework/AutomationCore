@@ -14,7 +14,6 @@ public interface UIActions extends Actions {
 	public ExecutionResult TypeTextOnElement(UIElement element, String text);
 
 	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
-<<<<<<< HEAD
 	
 	public ExecutionResult IsDisable(UIElement element);
 	
@@ -25,7 +24,6 @@ public interface UIActions extends Actions {
 	public ExecutionResult MoveFocusTo(UIElement element);
 	
 	public ExecutionResult GetSelectedValue(String value, UIElement element);
-=======
 
 	public ExecutionResult ElementIsEnabled(UIElement element);
 
@@ -34,5 +32,7 @@ public interface UIActions extends Actions {
 	public ExecutionResult MoveMouseOverElement(UIElement element);
 
 	public ExecutionResult ElementHasFocus(UIElement element);
->>>>>>> 7922494d20b000739ddd94496ee99ed7411a7739
+
+	public ExecutionResult ElementIsOrdered(UIElement element, String orderType);
+
 }

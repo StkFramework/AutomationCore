@@ -440,4 +440,10 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 
+	@Override
+	public ExecutionResult ElementIsOrdered(UIElement element, String orderType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
