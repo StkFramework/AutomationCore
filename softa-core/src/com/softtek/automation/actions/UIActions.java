@@ -33,4 +33,7 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult SelectListElement(String value, UIElement element);
 
+	public ExecutionResult ElementIsOrdered(UIElement element, String orderType);
+
+
 }

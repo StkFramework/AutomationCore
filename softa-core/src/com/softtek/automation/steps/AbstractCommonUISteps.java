@@ -77,5 +77,10 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void SelectListElement(String value, UIElement element){
 		assertTrue(UIActions.SelectListElement(value, element));
 	}
+	
+	protected void elementIsOrdered(UIElement element, String orderType) {
+		assertTrue(UIActions.ElementIsOrdered(element, orderType));
+
+	}
 		
 }

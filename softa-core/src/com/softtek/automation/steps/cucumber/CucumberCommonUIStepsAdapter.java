@@ -72,6 +72,12 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	public void select_value_from_list(String value, String list) throws Exception{
 		this.SelectListElement(value, this.UIElementFactory.createElement(list));
 	}
+	
+	@When("^(?i:Element) '(.+)' (?i:list is ordered) '(.+)'$")
+	public void element_is_ordered(String element, String orderType) throws Exception {		
+		this.elementIsOrdered(this.UIElementFactory.createElement(element), orderType);		
+
+	}
 
 
 }
