@@ -48,11 +48,6 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.MoveFocusTo(UIElementFactory.createElement(element));		
 	}
 	
-	@And("^(?i:Get) '(.+)' (?i:value from) '(.+)' (?i:dropdown)$")
-	public void get_value_from_dropdown(String value, String element) throws Exception {		
-		this.GetSelectedValue(value,UIElementFactory.createElement(element));		
-	}
-	
 	@When("^(?i:Element) '(.+)' (?i:is enabled)$")
 	public void element_is_enabled(String element) throws Exception {		
 		this.elementIsEnabled(this.UIElementFactory.createElement(element));		
@@ -73,9 +68,15 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.elementHasFocus(this.UIElementFactory.createElement(element));		
 	}
 	
+	@And("^(?i:Select value) '(.+)' (?i:from list) '(.+)'$")
+	public void select_value_from_list(String value, String list) throws Exception{
+		this.SelectListElement(value, this.UIElementFactory.createElement(list));
+	}
+	
 	@When("^(?i:Element) '(.+)' (?i:list is ordered) '(.+)'$")
 	public void element_is_ordered(String element, String orderType) throws Exception {		
 		this.elementIsOrdered(this.UIElementFactory.createElement(element), orderType);		
+
 	}
 	
 	@When("^(?i:Element) '(.+)' (?i:NOT exist)$")

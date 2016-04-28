@@ -33,7 +33,6 @@ public class BasicUIElementFactory implements UIElementFactory {
 	}
 
 	private boolean isValidFormat(String idElement) {
-		System.out.println("idElement.split.length -> " + idElement.split("\\.").length);
 		return idElement.split("\\.").length == 2;
 	}
 

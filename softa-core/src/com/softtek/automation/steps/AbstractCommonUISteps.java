@@ -57,10 +57,6 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void MoveFocusTo(UIElement element){
 		assertTrue(UIActions.MoveFocusTo(element));
 	}
-	
-	protected void GetSelectedValue(String value, UIElement element){
-		assertTrue(UIActions.GetSelectedValue(value, element));
-	}
 
 	protected void elementIsEnabled(UIElement element) {
 		assertTrue(UIActions.ElementIsEnabled(element));
@@ -78,8 +74,13 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.ElementHasFocus(element));
 	}
 	
+	protected void SelectListElement(String value, UIElement element){
+		assertTrue(UIActions.SelectListElement(value, element));
+	}
+	
 	protected void elementIsOrdered(UIElement element, String orderType) {
 		assertTrue(UIActions.ElementIsOrdered(element, orderType));
+
 	}
 	
 	protected void elementNotExist(UIElement element) {
