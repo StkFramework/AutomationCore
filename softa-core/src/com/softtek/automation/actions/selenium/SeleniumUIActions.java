@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.softtek.automation.ExecutionResult;
+import com.softtek.automation.TestLogger;
 import com.softtek.automation.actions.UIActions;
 import com.softtek.automation.driver.TestDriver;
 import com.softtek.automation.driver.selenium.SeleniumDriver;
@@ -480,9 +481,11 @@ public class SeleniumUIActions implements UIActions {
 		
 		if(executionResult.isValidResult()){
 			executionResult.setObjectResult(webElement.getText());
+			TestLogger.INFO(this, "Getting text from element \"" + element.getId() + "\". Text is " + executionResult.getObjectResult().toString());
 		}else{			
 			executionResult.setMessage(new StringBuilder("Element \"")
 					.append(element.getId()).append("\" is <input> type. Can't retrieve text.").toString() );
+			TestLogger.ERROR(this, executionResult.getMessage());
 		}		
 		
 		return executionResult;
@@ -503,9 +506,11 @@ public class SeleniumUIActions implements UIActions {
 		
 		if(executionResult.isValidResult()){
 			executionResult.setObjectResult(webElement.getAttribute("value"));
+			TestLogger.INFO(this, "Getting value from element \"" + element.getId() + "\". Value is " + executionResult.getObjectResult().toString());
 		}else{			
 			executionResult.setMessage(new StringBuilder("Element \"")
 					.append(element.getId()).append("\" is not <input> type. Can't retrieve text from \"value\" attribute.").toString() );
+			TestLogger.ERROR(this, executionResult.getMessage());
 		}		
 		
 		return executionResult;
