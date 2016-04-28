@@ -1,5 +1,7 @@
 package com.softtek.automation.actions.selenium;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.softtek.automation.ExecutionResult;
 import com.softtek.automation.actions.UIActions;
 import com.softtek.automation.driver.TestDriver;
-import com.softtek.automation.driver.selenium.SeleniumDriver;
 import com.softtek.automation.element.UIElement;
 
 public class SeleniumUIActions implements UIActions {
@@ -442,8 +443,55 @@ public class SeleniumUIActions implements UIActions {
 
 	@Override
 	public ExecutionResult ElementIsOrdered(UIElement element, String orderType) {
-		// TODO Auto-generated method stub
-		return null;
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		List <WebElement> listElements = webElement.findElements(By.xpath("li"));
+		
+		if(orderType.equalsIgnoreCase("asc")){
+			for(int i = 0; i < listElements.size()-1; i++ ){
+				executionResult.setResult(listElements.get(i).getText().compareTo(listElements.get(i+1).getText()) <= 0);
+				if(!executionResult.isValidResult()) break;
+			}
+		}
+		else if(orderType.equalsIgnoreCase("desc")){
+			for(int i = 0; i < listElements.size()-1; i++ ){
+				executionResult.setResult(listElements.get(i).getText().compareTo(listElements.get(i+1).getText()) >= 0);
+				if(!executionResult.isValidResult()) break;
+			}
+		}
+		
+		executionResult.setMessage(
+				executionResult.isValidResult() ? null : new StringBuilder()
+						.append("The ")
+						.append(element.getId())
+						.append(" is NOT ordered correctly.").toString());
+		return executionResult;
+	}
+
+	
+	@Override
+	public ExecutionResult ElementNotExist(UIElement element) {
+		ExecutionResult executionResult = new ExecutionResult();
+		
+		try{
+			WebElement webElement = findWebElement(element);
+			executionResult.setResult(!webElement.isDisplayed());
+		}
+		catch (final StaleElementReferenceException | NoSuchElementException e){
+			executionResult.setResult(true);
+		}
+		
+		executionResult.setMessage(
+				executionResult.isValidResult() ? null : new StringBuilder()
+						.append("Element ")
+						.append(element.getId())
+						.append(" exist in the DOM and the expected is the opposite").toString());
+		
+		return executionResult;
 	}
 
 }

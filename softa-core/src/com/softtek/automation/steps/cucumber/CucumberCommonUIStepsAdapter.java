@@ -77,6 +77,10 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	public void element_is_ordered(String element, String orderType) throws Exception {		
 		this.elementIsOrdered(this.UIElementFactory.createElement(element), orderType);		
 	}
-
+	
+	@When("^(?i:Element) '(.+)' (?i:NOT exist)$")
+	public void element_not_exist(String element) throws Exception {		
+		this.elementNotExist(this.UIElementFactory.createElement(element));		
+	}
 
 }

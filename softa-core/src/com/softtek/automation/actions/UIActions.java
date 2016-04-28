@@ -35,4 +35,6 @@ public interface UIActions extends Actions {
 
 	public ExecutionResult ElementIsOrdered(UIElement element, String orderType);
 
+	public ExecutionResult ElementNotExist(UIElement element);
+
 }

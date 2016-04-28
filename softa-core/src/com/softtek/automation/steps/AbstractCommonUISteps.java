@@ -81,5 +81,9 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void elementIsOrdered(UIElement element, String orderType) {
 		assertTrue(UIActions.ElementIsOrdered(element, orderType));
 	}
+	
+	protected void elementNotExist(UIElement element) {
+		assertTrue(UIActions.ElementNotExist(element));
+	}
 		
 }
