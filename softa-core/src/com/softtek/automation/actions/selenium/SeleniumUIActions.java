@@ -467,5 +467,48 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 
+	@Override
+	public ExecutionResult GetText(UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		executionResult.setResult(!"input".equals(webElement.getTagName()));
+		
+		if(executionResult.isValidResult()){
+			executionResult.setObjectResult(webElement.getText());
+		}else{			
+			executionResult.setMessage(new StringBuilder("Element \"")
+					.append(element.getId()).append("\" is <input> type. Can't retrieve text.").toString() );
+		}		
+		
+		return executionResult;
+	}
+	
+	
+
+	@Override
+	public ExecutionResult GetValue(UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		executionResult.setResult("input".equals(webElement.getTagName()));
+		
+		if(executionResult.isValidResult()){
+			executionResult.setObjectResult(webElement.getAttribute("value"));
+		}else{			
+			executionResult.setMessage(new StringBuilder("Element \"")
+					.append(element.getId()).append("\" is not <input> type. Can't retrieve text from \"value\" attribute.").toString() );
+		}		
+		
+		return executionResult;
+	}
 
 }
