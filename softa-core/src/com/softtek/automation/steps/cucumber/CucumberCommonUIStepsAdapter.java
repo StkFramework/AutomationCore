@@ -68,9 +68,9 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.elementHasFocus(this.UIElementFactory.createElement(element));		
 	}
 	
-	@And("^(?i:Select value) '(.+)' (?i:from list) '(.+)'$")
-	public void select_value_from_list(String value, String list) throws Exception{
-		this.SelectListElement(value, this.UIElementFactory.createElement(list));
+	@And("^(?i:Select element) '(.+)' (?i:from list) '(.+)'$")
+	public void select_element_from_list(String element, String list) throws Exception{
+		this.selectListElement(element, this.UIElementFactory.createElement(list));
 	}
 	
 	@When("^(?i:Element) '(.+)' (?i:list is ordered) '(.+)'$")
@@ -82,6 +82,16 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	@When("^(?i:Element) '(.+)' (?i:NOT exist)$")
 	public void element_not_exist(String element) throws Exception {		
 		this.elementNotExist(this.UIElementFactory.createElement(element));		
+	}
+	
+	@Then("^(?i:Select value) '(.+)' (?i:from list) '(.+)'$")
+	public void select_value_from_list(String value, String element) throws Exception{
+		this.selectValueOnListElement(value, this.UIElementFactory.createElement(element));
+	}
+	
+	@And("^(?i:Get selected value from) '(.+)' (?i:dropdown list)$")
+	public void get_selected_value_from_dropdown_list(String element) throws Exception{
+		this.getSelectedValue(this.UIElementFactory.createElement(element));
 	}
 
 }

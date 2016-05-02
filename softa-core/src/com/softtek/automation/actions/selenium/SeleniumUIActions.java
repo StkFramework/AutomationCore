@@ -13,12 +13,21 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Strings;
 import com.softtek.automation.ExecutionResult;
 import com.softtek.automation.TestLogger;
 import com.softtek.automation.actions.UIActions;
 import com.softtek.automation.driver.TestDriver;
 import com.softtek.automation.element.UIElement;
 
+/**
+ * @author jesus.burquez
+ *
+ */
+/**
+ * @author jesus.burquez
+ *
+ */
 public class SeleniumUIActions implements UIActions {
 
 	@Autowired
@@ -34,6 +43,12 @@ public class SeleniumUIActions implements UIActions {
 		return this.testDriver;
 	}
 
+	/**
+	 * This method perform a click on an element
+	 * 
+	 * @param element The element should be able to perform the click
+	 */
+	
 	@Override
 	public ExecutionResult ClickOnElement(UIElement element) {
 
@@ -61,7 +76,13 @@ public class SeleniumUIActions implements UIActions {
 
 		return executionResult;
 	}
-
+	
+	/**
+	 * This method verify if an element have text
+	 * 
+	 * @param element This element should have the text
+	 * @param text The text that should have in the element
+	 */
 	@Override
 	public ExecutionResult ElementHasText(UIElement element, String text) {
 
@@ -88,6 +109,12 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method verify if an element contains text
+	 * 
+	 * @param element This element should contains the text
+	 * @param text The text that should contains in the element
+	 */
 	@Override
 	public ExecutionResult ElementContainsText(UIElement element, String text) {
 
@@ -114,6 +141,13 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	
+	/**
+	 * This method write text in an element
+	 * 
+	 * @param element The element is where the text should be write
+	 * @param text This is the text that will be write in the element
+	 */
 	@Override
 	public ExecutionResult TypeTextOnElement(UIElement element, String text) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -155,7 +189,12 @@ public class SeleniumUIActions implements UIActions {
 
 		return null;
 	}
-
+	
+	/**
+	 * This method verify if the element is enable to perform an action
+	 * 
+	 * @param element The element will be verify to check if it's enable
+	 */
 	@Override
 	public ExecutionResult ElementIsEnabled(UIElement element) {
 
@@ -176,7 +215,13 @@ public class SeleniumUIActions implements UIActions {
 		}
 		return executionResult;
 	}
-
+	
+	/**
+	 * This method verify the tag of the web element
+	 * 
+	 * @param element The element should content a tag 
+	 * @param tagType This variable contains the tag that will be compare with the element tag
+	 */
 	@Override
 	public ExecutionResult ElementIsTypeOf(UIElement element, String tagType) {
 
@@ -201,6 +246,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method will move the mouse over an element
+	 * 
+	 * @param element The element that will have the mouse over
+	 */
 	@Override
 	public ExecutionResult MoveMouseOverElement(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -331,6 +381,11 @@ public class SeleniumUIActions implements UIActions {
 		return webElement.getAttribute(attributeType.toLowerCase());
 	}
 
+	/**
+	 * This method verify if the element is disable to perform an action
+	 * 
+	 * @param element The element will be verify to check if it's disable
+	 */
 	@Override
 	public ExecutionResult IsDisable(UIElement element) {
 
@@ -354,6 +409,12 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method verify the max lenght from a textbox element
+	 * 
+	 * @param element The textbox element that will be verify
+	 * @param lenght The max lenght that should contains
+	 */
 	@Override
 	public ExecutionResult VerifyMaxLengthText(UIElement element, int length) {
 
@@ -377,6 +438,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method verify if the element is selected or checked
+	 * 
+	 * @param element The element will be verified if is selected or checked
+	 */
 	@Override
 	public ExecutionResult IsSelected(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -398,6 +464,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method move the default focus to the next element
+	 * 
+	 * @param element The element that has the focus
+	 */
 	@Override
 	public ExecutionResult MoveFocusTo(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -425,16 +496,23 @@ public class SeleniumUIActions implements UIActions {
 
 		return executionResult;
 	}
-
+	
+	
+	/**
+	 * This method select a value from a dropdown
+	 * 
+	 * @param value The value that will be selected from the dropdown
+	 * @param element The dropdown that contains the value that will be selected
+	 */
 	@Override
-	public ExecutionResult SelectListElement(String value, UIElement element) {
+	public ExecutionResult SelectValueOnListElement(String value, UIElement element) {
 		
 		ExecutionResult executionResult = new ExecutionResult();
 		
 		boolean getResult = false;
-
+	
 		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
-
+	
 		isElementDisplayed(element, webElement, executionResult);
 		
 		Select selectList = new Select(webElement);
@@ -444,23 +522,30 @@ public class SeleniumUIActions implements UIActions {
 		if(executionResult.isValidResult()){
 			for (WebElement singleElement : listWebElement){
 				if(singleElement.getText().equals(value)){
+					selectList.selectByVisibleText(value);
 					getResult = true;
 					break;
 				}
-
+	
 			}
 		}
 		
 			executionResult.setResult(getResult);
 			executionResult.setMessage(executionResult.isValidResult() ? null : new StringBuilder()
-			.append("Element ")
-			.append(element.getId())
+			.append("Value ")
+			.append("\""+value+"\"")
 			.append(" NOT exist in dropdown").toString());
 		
 		return executionResult;	
 		
 	}
 
+	/**
+	 * This method ordered a list of element by ascending or descending
+	 * 
+	 * @param element The element that contains the list element
+	 * @param orderType Is the order type that should be ordered the list
+	 */
 	@Override
 	public ExecutionResult ElementIsOrdered(UIElement element, String orderType) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -514,6 +599,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method get the text from a element
+	 * 
+	 * @param element The element is where the text will be getting
+	 */
 	@Override
 	public ExecutionResult GetText(UIElement element) {
 		
@@ -537,8 +627,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 	
-	
-
+	/**
+	 * This method get the value from a element
+	 * 
+	 * @param element The element is where the value will be getting
+	 */
 	@Override
 	public ExecutionResult GetValue(UIElement element) {
 		
@@ -558,6 +651,81 @@ public class SeleniumUIActions implements UIActions {
 					.append(element.getId()).append("\" is not <input> type. Can't retrieve text from \"value\" attribute.").toString() );
 			TestLogger.ERROR(this, executionResult.getMessage());
 		}		
+		
+		return executionResult;
+	}
+	
+	/**
+	 * This method select an element from a dropdown
+	 * 
+	 * @param selectedItem The item or element that will be select
+	 * @param element The dropdown element where will be selected the element
+	 */
+	@Override
+	public ExecutionResult SelecElementFromtList(String selectedItem, UIElement element) {
+		ExecutionResult executionResult = new ExecutionResult();
+		
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		
+		List<WebElement> getSelectedOption;
+		
+		WebElement getElement;
+				
+		boolean getResult = false;
+		
+		isElementDisplayed(element, webElement, executionResult);
+		
+		Select selectList = new Select(webElement);
+		
+		getSelectedOption = selectList.getOptions();
+		
+		for (WebElement singleElement : getSelectedOption){
+			if(singleElement.getText().equals(selectedItem)){
+				getElement = singleElement;
+				getResult = true;
+				break;
+			}
+		}
+		
+		if(executionResult.isValidResult()){
+			executionResult.setResult(getResult);
+			executionResult.setMessage(executionResult.isValidResult() ? null : new StringBuilder()
+			.append("Element ")
+			.append(selectedItem)
+			.append(" NOT exist in list").toString());			
+		}
+		
+		return executionResult;
+	}
+	
+	/**
+	 * This method get the selected value from a dropdown.
+	 * 
+	 * @param element the dropdown element where is the value
+	 */
+	@Override
+	public ExecutionResult GetSelectedValue(UIElement element) {
+		ExecutionResult executionResult = new ExecutionResult();
+		
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		
+		WebElement getSelectedOption;
+		
+		String selectedOption;
+		
+		isElementDisplayed(element, webElement, executionResult);
+		
+		Select selectList = new Select(webElement);
+		
+		getSelectedOption = selectList.getFirstSelectedOption();
+		
+		selectedOption = getSelectedOption.getText();
+		
+		if(executionResult.isValidResult()){
+			executionResult.setResult(!Strings.isNullOrEmpty(selectedOption));
+			executionResult.setMessage(executionResult.isValidResult() ? null : new StringBuilder()
+			.append("Selected value is null or empty").toString());
+		}
 		
 		return executionResult;
 	}

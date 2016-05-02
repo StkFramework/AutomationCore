@@ -31,7 +31,7 @@ public interface UIActions extends Actions {
 
 	public ExecutionResult ElementHasFocus(UIElement element);
 	
-	public ExecutionResult SelectListElement(String value, UIElement element);
+	public ExecutionResult SelectValueOnListElement(String value, UIElement element);
 
 	public ExecutionResult ElementIsOrdered(UIElement element, String orderType);
 	
@@ -39,7 +39,10 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult GetValue(UIElement element);	
 
-
 	public ExecutionResult ElementNotExist(UIElement element);
+	
+	public ExecutionResult SelecElementFromtList(String selectedItem, UIElement element);
+	
+	public ExecutionResult GetSelectedValue(UIElement element);
 
 }
