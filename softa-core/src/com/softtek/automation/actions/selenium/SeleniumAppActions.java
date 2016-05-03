@@ -65,7 +65,7 @@ public class SeleniumAppActions implements AppActions {
 		ExecutionResult result = new ExecutionResult();
 		boolean applicationFound = false;
 		
-		TestLogger.INFO(this, "OpenApplication::" +  application);
+		TestLogger.getInstance(this).info(application);
 
 		List<Application> applicationsList = applicationsSet.getApplications();
 				
@@ -75,8 +75,8 @@ public class SeleniumAppActions implements AppActions {
 				testDriver.getDriverInstance().manage().window().maximize();
 				testDriver.getDriverInstance().manage().deleteAllCookies();
 
-				TestLogger.INFO(this, "application.environment:: " + app.getEnvironment());
-				TestLogger.INFO(this,"application.properties:: " + app.getProperties());
+				TestLogger.getInstance(this).info("application.environment = " + app.getEnvironment());
+				TestLogger.getInstance(this).info("application.properties = " + app.getProperties());
 
 				testDriver.getDriverInstance().get(
 						app.getProperties().get("url."+ app.getEnvironment()).toString());
@@ -89,7 +89,7 @@ public class SeleniumAppActions implements AppActions {
 		if(applicationFound == false){
 			result.setResult(false);
 			result.setMessage("Aplication \"" + application +"\" can't be opened. There isn't a definition.");
-			TestLogger.ERROR(this, result.getMessage());
+			TestLogger.getInstance(this).error(result.getMessage());
 		}
 		
 		return result;

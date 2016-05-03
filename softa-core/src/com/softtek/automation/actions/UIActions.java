@@ -44,5 +44,9 @@ public interface UIActions extends Actions {
 	public ExecutionResult SelecElementFromtList(String selectedItem, UIElement element);
 	
 	public ExecutionResult GetSelectedValue(UIElement element);
+	
+	//public ExecutionResult GetRowValues(UIElement element);
+	
+	public ExecutionResult VerifyUI(String UIView)throws Exception;
 
 }

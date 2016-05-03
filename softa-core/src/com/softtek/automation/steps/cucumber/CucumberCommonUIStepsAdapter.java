@@ -94,4 +94,8 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.getSelectedValue(this.UIElementFactory.createElement(element));
 	}
 
+	@When("^(?i:I verify UI view) '(.+)'$")
+	public void i_verify_ui(String UIView) throws Exception {		
+		this.verifyUI(UIView);		
+	}
 }

@@ -33,13 +33,13 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 	@PostConstruct
 	public void setUpDriver() {
 
-		TestLogger.INFO(this,"Setting up Testdriver ...");
+		TestLogger.getInstance(this).info("Setting up Testdriver...");
 
 		this.driverType = properties.getProperty("driverType");
 		this.browser = properties.getProperty("browser");
 
-		TestLogger.INFO(this, "Starting AutomationDriver as type: " + driverType);
-		TestLogger.INFO(this, "Starting configuration for browser : " + browser);
+		TestLogger.getInstance(this).info("Driver type: " + driverType);
+		TestLogger.getInstance(this).info("Browser : " + browser);
 
 		try {
 			DesiredCapabilities capabilities = new DesiredCapabilities();

@@ -94,5 +94,9 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void selectValueOnListElement(String value, UIElement element){
 		assertTrue(UIActions.SelectValueOnListElement(value, element));
 	}
+	
+	protected void verifyUI(String UIView) throws Exception{
+		assertTrue(UIActions.VerifyUI(UIView));
+	}
 		
 }

@@ -1,5 +1,6 @@
 package com.softtek.automation.actions.selenium;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -18,7 +19,9 @@ import com.softtek.automation.ExecutionResult;
 import com.softtek.automation.TestLogger;
 import com.softtek.automation.actions.UIActions;
 import com.softtek.automation.driver.TestDriver;
+import com.softtek.automation.element.How;
 import com.softtek.automation.element.UIElement;
+import com.softtek.automation.uiverifications.UIElementsVerification;
 
 /**
  * @author jesus.burquez
@@ -30,9 +33,20 @@ import com.softtek.automation.element.UIElement;
  */
 public class SeleniumUIActions implements UIActions {
 
-	@Autowired
+	
 	private TestDriver<WebDriver> testDriver;
 
+	private UIElementsVerification UIElementsVerification;	
+	
+	public UIElementsVerification getUIElementsVerification() {
+		return UIElementsVerification;
+	}
+
+	public void setUIElementsVerification(UIElementsVerification uIElementsVerification) {
+		UIElementsVerification = uIElementsVerification;
+	}
+	
+	
 	@Override
 	public void setTestDriver(TestDriver testDriver) {
 		this.testDriver = testDriver;
@@ -43,6 +57,9 @@ public class SeleniumUIActions implements UIActions {
 		return this.testDriver;
 	}
 
+	
+	
+	
 	/**
 	 * This method perform a click on an element
 	 * 
@@ -728,6 +745,40 @@ public class SeleniumUIActions implements UIActions {
 		}
 		
 		return executionResult;
+	}
+
+	
+	public ExecutionResult GetRowValues(UIElement element) {
+		
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		if(element.getHow().equals(How.XPATH)){
+			if(element.getUsing().contains("/tbody/")
+					&& element.getUsing().contains("/td")){
+				
+				List<WebElement> tableRows =
+						testDriver.getDriverInstance().findElements(
+								By.xpath(element.getUsing()));
+			
+				List<String> rowsResult = new ArrayList<String>();
+				
+				for(WebElement row : tableRows){
+					
+					row.findElement(By.xpath(".//td"));
+					
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	public ExecutionResult VerifyUI(String UIView) throws Exception{		
+		return UIElementsVerification.veryfyElements(UIView);
 	}
 
 }

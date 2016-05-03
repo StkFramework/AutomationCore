@@ -1,8 +1,8 @@
 package com.softtek.automation.element;
 
 import java.lang.reflect.Field;
-
 import com.softtek.automation.anotations.ElementMap;
+
 
 public class BasicUIElementFactory implements UIElementFactory {
 
@@ -114,13 +114,9 @@ public class BasicUIElementFactory implements UIElementFactory {
 
 		if(fieldFound == false){
 			throw new Exception("Field \"" + field + "\" doesn't exists in class \"" + viewStructure.getClass().getName() + "\""  );
-		}
-		
-		
+		}		
 		
 		return uiElement;
-	}
-
-	
+	}	
 	
 }

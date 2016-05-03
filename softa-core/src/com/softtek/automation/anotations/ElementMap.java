@@ -16,5 +16,7 @@ public @interface ElementMap {
 	How how() default How.XPATH;
 
 	String using();
+	
+	boolean verify() default false;
 
 }
