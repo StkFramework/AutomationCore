@@ -787,6 +787,131 @@ public class SeleniumUIActions implements UIActions {
 		return this.ClickOnElement(createUIElementFromXpath(xpath, params));
 	}
 
+
+	@Override
+	public ExecutionResult HasText(String xpath, String[] params, String text) {
+		return this.ElementHasText(createUIElementFromXpath(xpath, params), text);
+	}
+
+	@Override
+	public ExecutionResult ContainsText(String xpath, String[] params, String text) {
+		return this.ElementContainsText(createUIElementFromXpath(xpath, params), text);
+	}
+
+	@Override
+	public ExecutionResult TypeTextOn(String xpath, String[] params, String text) {
+		return this.TypeTextOnElement(createUIElementFromXpath(xpath, params), text);
+	}
+
+	@Override
+	public ExecutionResult IsDisabled(String xpath, String[] params) {
+		return this.IsDisable(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult IsEnabled(String xpath, String[] params) {
+		return this.ElementIsEnabled(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult VerifyMaxLengthText(String xpath, String[] params, int length) {
+		return this.VerifyMaxLengthText(createUIElementFromXpath(xpath, params), length);
+	}
+
+	@Override
+	public ExecutionResult IsElementType(String xpath, String[] params, String tagType) {
+		return this.ElementIsTypeOf(createUIElementFromXpath(xpath, params), tagType);
+	}
+
+	@Override
+	public ExecutionResult SelectListElement(String selectedItem, String xpath, String[] params) {
+		return this.SelecElementFromtList(selectedItem, createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult MouseOver(String xpath, String[] params) {
+		return this.MoveMouseOverElement(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult IsSelected(String xpath, String[] params) {
+		return this.IsSelected(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult HasFocus(String xpath, String[] params) {
+		return this.ElementHasFocus(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult MoveFocusTo(String xpath, String[] params) {
+		return this.MoveFocusTo(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult SelectValueOnList(String value, String xpath, String[] params) {
+		return this.SelectValueOnListElement(value, createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult GetSelectedValue(String xpath, String[] params) {
+		return this.GetSelectedValue(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult GetText(String xpath, String[] params) {
+		return this.GetText(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult GetValue(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return this.GetValue(createUIElementFromXpath(xpath, params));
+	}
+
+	@Override
+	public ExecutionResult VerifyDescSort(String xpath, String[] params, String orderType) {
+		return this.ElementIsOrdered(createUIElementFromXpath(xpath, params), orderType);
+	}
+
+	@Override
+	public ExecutionResult PutElementValueInCacheContext(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ExecutionResult PutElementValueInVolatileContext(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ExecutionResult CountElements(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ExecutionResult GetColumnValues(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ExecutionResult GetRowValues(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ExecutionResult GetListValues(String xpath, String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
 	
 	
 	

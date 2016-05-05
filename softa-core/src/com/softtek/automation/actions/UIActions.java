@@ -54,4 +54,51 @@ public interface UIActions extends Actions {
 	 */
 
 	public ExecutionResult ClickOnElement(String xpath, String[] params);
+	
+	public ExecutionResult HasText(String xpath, String[] params, String text);
+	
+	public ExecutionResult ContainsText(String xpath, String[] params, String text);
+	
+	public ExecutionResult TypeTextOn(String xpath, String[] params, String text);
+	
+	public ExecutionResult IsDisabled(String xpath, String[] params);
+	
+	public ExecutionResult IsEnabled(String xpath, String[] params);
+	
+	public ExecutionResult VerifyMaxLengthText(String xpath, String[] params, int length);
+	
+	public ExecutionResult IsElementType(String xpath, String[] params, String tagType);
+	
+	public ExecutionResult SelectListElement(String selectedItem, String xpath, String[] params);
+	
+	public ExecutionResult MouseOver(String xpath, String[] params);
+	
+	public ExecutionResult IsSelected(String xpath, String[] params);
+	
+	public ExecutionResult HasFocus(String xpath, String[] params);
+	
+	public ExecutionResult MoveFocusTo(String xpath, String[] params);
+	
+	public ExecutionResult SelectValueOnList(String value, String xpath, String[] params);
+	
+	public ExecutionResult GetSelectedValue(String xpath, String[] params);
+	
+	public ExecutionResult GetText(String xpath, String[] params);
+	
+	public ExecutionResult GetValue(String xpath, String[] params);
+	
+	public ExecutionResult VerifyDescSort(String xpath, String[] params, String orderType);
+	
+	public ExecutionResult PutElementValueInCacheContext(String xpath, String[] params);
+	
+	public ExecutionResult PutElementValueInVolatileContext(String xpath, String[] params);
+	
+	public ExecutionResult CountElements(String xpath, String[] params);
+	
+	public ExecutionResult GetColumnValues(String xpath, String[] params);
+	
+	public ExecutionResult GetRowValues(String xpath, String[] params);
+	
+	public ExecutionResult GetListValues(String xpath, String[] params);
+		
 }
