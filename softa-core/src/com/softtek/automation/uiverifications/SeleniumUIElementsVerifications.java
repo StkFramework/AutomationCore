@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.functors.ExceptionClosure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -45,29 +46,39 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 	public ExecutionResult veryfyElements(String view) throws Exception{
 
 		ExecutionResult executionResult = new ExecutionResult();
+		
 		Class<?> clazz = processClassName(view);
 		List<UIElement> uiElementsList = getUIElementsForVerifications(clazz);		
-		verifyUIElements(uiElementsList,executionResult);
+		
+		verifyUIElements(uiElementsList,executionResult,view);		
 		
 		return executionResult;
 		
 	}		
 	
-	private void verifyUIElements(List<UIElement> uiElementsList, ExecutionResult executionResult) {		
+	private void verifyUIElements(List<UIElement> uiElementsList, ExecutionResult executionResult, String view) {		
 		
 		for(UIElement element: uiElementsList){
+			
 			TestLogger.getInstance(this).info("Verifying element \"" + element.getId() 
 					+ " by \""+ element.getHow() +"\" using \"" + element.getUsing() + "\"");
-			executionResult = new ExecutionResult();
 			
-			WebElement webElement = waitForElement(element,
-					findWebElement(element), 30L, executionResult);
+			WebElement webElement = findWebElement(element, executionResult, view);
 
-			isElementDisplayed(element, webElement, executionResult);
+			if(executionResult.isValidResult()){
+				
+				waitForElement(element,webElement, 30L, executionResult,view);
+
+				isElementDisplayed(element, webElement, executionResult,view);		
+				
+				if(!executionResult.isValidResult()){
+					break;
+				}				
 			
-			if(!executionResult.isValidResult()){
+			}else{
 				break;
 			}
+					
 		}
 		
 	}
@@ -118,10 +129,12 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 						+ "] can't be processed.", e);
 			}
 		}
+		
 		return uiElementsList;
 	}	
 	
-	private WebElement findWebElement(UIElement element) {
+	private WebElement findWebElement(UIElement element, ExecutionResult result, String view) {
+		
 		By by = null;
 
 		switch (element.getHow()) {
@@ -149,43 +162,56 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 			by = By.xpath(element.getUsing());
 			break;
 		}
+		
+		WebElement webElement = null;
+		
+		try{
+			
+			webElement = testDriver.getDriverInstance().findElement(by);
+		
+		}catch(NoSuchElementException e){
+			result.setResult(false);
+			result.setMessage(new StringBuilder().append("Waiting time out: Element \"")
+					.append(view).append(".").append(element.getId())
+					.append("\" not found.").toString());
+			TestLogger.getInstance(this).error(result.getMessage() + "Excpetion message is: " + e.getMessage());
 
-		return testDriver.getDriverInstance().findElement(by);
-
+		}	
+		return webElement;
 	}
 
-	private WebElement waitForElement(UIElement uiElement,
-			WebElement webElement, Long timeOutInSeconds, ExecutionResult result) {
+	private void waitForElement(UIElement element,
+			WebElement webElement, Long timeOutInSeconds, ExecutionResult result,  String view) {
 
 		WebDriverWait wait = new WebDriverWait(testDriver.getDriverInstance(),
 				timeOutInSeconds);
 
 		try {
 			wait.until(ExpectedConditions.visibilityOf(webElement));
-			// Thread.sleep(ConstantsUtils.TIME_SLEEP_1x);
 			Thread.sleep(1000);
-		} catch (final NoSuchElementException | InterruptedException e) {
+		} catch (NoSuchElementException | InterruptedException e) {
 			result.setResult(false);
-			result.setMessage(new StringBuilder().append("Waiting time out: ")
-					.append(uiElement.getId()).append(" not found.").toString());
+			result.setMessage(new StringBuilder().append("Waiting time out: Element \"")
+					.append(view).append(".").append(element.getId())
+					.append("\" not found.").toString());
+			TestLogger.getInstance(this).error(result.getMessage() + "Excpetion message is: " + e.getMessage());
 		}
-
-		return webElement;
 	}
 
-	private void isElementDisplayed(UIElement uiElement, WebElement webElement,
-			ExecutionResult result) {
+	private void isElementDisplayed(UIElement element, WebElement webElement,
+			ExecutionResult result, String view) {
 
 		try {
-
 			result.setResult(webElement.isDisplayed());
+			
 		} catch (final StaleElementReferenceException | NoSuchElementException e) {
 			result.setResult(false);
-			result.setMessage(new StringBuilder("Element \"").append("\"")
-					.append(uiElement).append("\" is not attached at DOM.")
+			result.setMessage(new StringBuilder("Element ").append("\"")
+					.append(view).append(".").append(element.getId())
+					.append("\" is not attached at DOM.")
 					.toString());
 			result.setError(e);
-			TestLogger.ERROR(this, result.getMessage() + "Excpetion message is: " + e.getMessage());
+			TestLogger.getInstance(this).error(result.getMessage() + "Excpetion message is: " + e.getMessage());
 
 		}
 

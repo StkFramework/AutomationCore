@@ -21,4 +21,8 @@ public class ConstantsUtils {
 	public static final Object NOT_NULL = "NotNull";
 
 	public static final int CONTEXT_CACHE_SIZE = 100;
+	
+	public static final int ERROR = 0;
+	
+	public static final int FAIL = 1;
 }

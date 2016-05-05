@@ -1,7 +1,9 @@
 package com.softtek.automation.steps;
 
+import org.apache.xalan.xsltc.runtime.Constants;
 import org.junit.Assert;
 
+import com.softtek.automation.ConstantsUtils;
 import com.softtek.automation.ExecutionContext;
 import com.softtek.automation.ExecutionResult;
 
@@ -18,7 +20,7 @@ public abstract class AbstractSteps {
 	}
 
 	protected Object assertTrue(ExecutionResult execution) {
-		Assert.assertTrue(execution.getMessage(), execution.isValidResult());
+		Assert.assertTrue(execution.getErrorType() + ": " + execution.getMessage(), execution.isValidResult());
 		return execution.getObjectResult();
 	}
 

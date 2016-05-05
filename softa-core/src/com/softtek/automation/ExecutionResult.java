@@ -2,16 +2,20 @@ package com.softtek.automation;
 
 public class ExecutionResult {
 
-	private boolean result = true;
-
+	private boolean result;
+	
 	private String message;
 
 	private Throwable error;
 	
 	private Object objectResult;
 
+	private ErrorType errorType;
+	
 	public ExecutionResult() {
 		super();
+		this.result = true;
+		this.errorType = ErrorType.ERROR;
 	}
 
 	public ExecutionResult(boolean result, String message) {
@@ -36,7 +40,23 @@ public class ExecutionResult {
 	}
 
 	
-	
+	public ExecutionResult(boolean result, String message, Throwable error, Object objectResult, ErrorType errorType) {
+		super();
+		this.result = result;
+		this.message = message;
+		this.error = error;
+		this.objectResult = objectResult;
+		this.errorType = errorType;
+	}
+
+	public ErrorType getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(ErrorType errorType) {
+		this.errorType = errorType;
+	}
+
 	public Object getObjectResult() {
 		return objectResult;
 	}
@@ -71,3 +91,5 @@ public class ExecutionResult {
 	}
 
 }
+
+

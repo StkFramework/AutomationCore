@@ -26,7 +26,6 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 	private String driverType;
 
 	private Properties properties;
-
 	private WebDriver webDriver;
 
 	@Override
@@ -124,14 +123,15 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 		firefoxProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		firefoxProfile.setPreference("browser.download.manager.alertOnEXEOpen", false);
 		firefoxProfile.setPreference("browser.download.manager.focusWhenStarting", false);
-		// profile.setPreference("browser.download.manager.useWindow", false);
-		firefoxProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
-		// profile.setPreference("browser.download.manager.closeWhenDone", false);
-		// firefoxProfile.setPreference("browser.download.manager.showWhenStarting", false);
+		firefoxProfile.setPreference("browser.download.manager.showAlertOnComplete", false);		
 		firefoxProfile.setPreference("browser.download.manager.focusWhenStarting", false);
-		// profile.setPreference("browser.download.useDownloadDir", true);
 		firefoxProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		firefoxProfile.setPreference("services.sync.prefs.sync.browser.download.manager.showWhenStarting", false);
+		
+		// profile.setPreference("browser.download.manager.closeWhenDone", false);
+		// firefoxProfile.setPreference("browser.download.manager.showWhenStarting", false);
+		// profile.setPreference("browser.download.manager.useWindow", false);
+		// profile.setPreference("browser.download.useDownloadDir", true);
 
 		return firefoxProfile;
 	}

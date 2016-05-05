@@ -777,8 +777,59 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 
+	@Override
 	public ExecutionResult VerifyUI(String UIView) throws Exception{		
 		return UIElementsVerification.veryfyElements(UIView);
 	}
 
+	@Override
+	public ExecutionResult ClickOnElement(String xpath, String[] params) {
+		return this.ClickOnElement(createUIElementFromXpath(xpath, params));
+	}
+
+	
+	
+	
+	
+	private UIElement createUIElementFromXpath(String xpath, String [] args){
+		UIElement element = new UIElement();
+		
+		element.setHow(How.XPATH);
+		element.setUsing(processXpath(xpath, args));
+		element.setId("Anonym.Element");	
+		
+		return element;
+	}
+	
+	
+    private String processXpath(String xpath, String [] args)throws IllegalArgumentException {
+			//String path = ".//*[@id='carsTable']/tbody/tr[?]/td[?]/a";
+			String path = xpath;			
+			if(path.contains(":p")){
+				if(args != null){
+					if(args.length > 0){						
+						for(String arg: args){
+							path = path.replaceFirst(":p", arg);									
+						}
+					}else{
+						throw new IllegalArgumentException("xpath expresion is specifying some :p arguments but there are not elements in args[].");
+					}
+				}else{
+					throw new IllegalArgumentException("xpath expresion is specifying some :p arguments but args[] is null.");
+				}					
+			}					
+			
+			return path;
+	}
+	
+	
+	public static void main(String parms []){
+		String xpath = ".//*[@id='carsTable']/tbody/tr[:p]/td[:p]/a";
+		String [] args = new String[]{"1" ,"4"};		
+		
+		System.out.println("xpath -> "+xpath);
+		xpath = new SeleniumUIActions().processXpath(xpath, args);
+		System.out.println("processed xpath -> "+xpath);
+		
+	}
 }

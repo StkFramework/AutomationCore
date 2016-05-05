@@ -48,5 +48,10 @@ public interface UIActions extends Actions {
 	//public ExecutionResult GetRowValues(UIElement element);
 	
 	public ExecutionResult VerifyUI(String UIView)throws Exception;
+	
+	/*
+	 *Overload actions 
+	 */
 
+	public ExecutionResult ClickOnElement(String xpath, String[] params);
 }
