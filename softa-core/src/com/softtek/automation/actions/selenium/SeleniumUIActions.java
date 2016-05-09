@@ -45,8 +45,7 @@ public class SeleniumUIActions implements UIActions {
 	public void setUIElementsVerification(UIElementsVerification uIElementsVerification) {
 		UIElementsVerification = uIElementsVerification;
 	}
-	
-	
+		
 	@Override
 	public void setTestDriver(TestDriver testDriver) {
 		this.testDriver = testDriver;
@@ -57,15 +56,12 @@ public class SeleniumUIActions implements UIActions {
 		return this.testDriver;
 	}
 
-	
-	
-	
+		
 	/**
 	 * This method perform a click on an element
 	 * 
 	 * @param element The element should be able to perform the click
 	 */
-	
 	@Override
 	public ExecutionResult ClickOnElement(UIElement element) {
 
@@ -157,7 +153,6 @@ public class SeleniumUIActions implements UIActions {
 
 		return executionResult;
 	}
-
 	
 	/**
 	 * This method write text in an element
@@ -291,6 +286,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method verify if the element has the focus of the driver
+	 * 
+	 * @param element The element should contain the focus
+	 */
 	@Override
 	public ExecutionResult ElementHasFocus(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -313,6 +313,11 @@ public class SeleniumUIActions implements UIActions {
 
 	/* BE CAREFUL: Dont remove or delete this private methods */
 
+	/**
+	 * This method find an element in the UI 
+	 * 
+	 * @param element The element should exist in the UI
+	 */
 	private WebElement findWebElement(UIElement element) {
 		By by = null;
 
@@ -345,7 +350,15 @@ public class SeleniumUIActions implements UIActions {
 		return testDriver.getDriverInstance().findElement(by);
 
 	}
-
+	
+	/**
+	 * This method wait for the element to be displayed in the UI 
+	 * 
+	 * @param uiElement The element should exist in the UI 
+	 * @param webElement The web element should contain the functions
+	 * @param timeOutInSeconds The period of time that the driver wait for the element
+	 * @param result The Execution Result object
+	 */
 	private WebElement waitForElement(UIElement uiElement,
 			WebElement webElement, Long timeOutInSeconds, ExecutionResult result) {
 
@@ -364,7 +377,14 @@ public class SeleniumUIActions implements UIActions {
 
 		return webElement;
 	}
-
+	
+	/**
+	 * This method verify if the element is Displayed in the UI 
+	 * 
+	 * @param uiElement The element should exist in the UI 
+	 * @param webElement The web element should contain the functions
+	 * @param result The Execution Result object
+	 */
 	private void isElementDisplayed(UIElement uiElement, WebElement webElement,
 			ExecutionResult result) {
 
@@ -381,9 +401,21 @@ public class SeleniumUIActions implements UIActions {
 		}
 
 	}
+	
+	/**
+	 * This method get the string attribute for the element 
+	 * 
+	 * @param uiElement The element should exist in the UI 
+	 * @param attributeType Specify the attribute for the element
+	 */
+	private String getAttribute(UIElement uiElement, String attributeType) {
+		ExecutionResult result = new ExecutionResult();
 
-	private String getAttribute(UIElement uiElement, WebElement webElement,
-			ExecutionResult result, String attributeType) {
+		WebElement webElement = waitForElement(uiElement,
+				findWebElement(uiElement), 30L, result);
+
+		isElementDisplayed(uiElement, webElement, result);
+		
 		try {
 
 			result.setResult(webElement.isDisplayed());
@@ -513,8 +545,7 @@ public class SeleniumUIActions implements UIActions {
 
 		return executionResult;
 	}
-	
-	
+		
 	/**
 	 * This method select a value from a dropdown
 	 * 
@@ -594,7 +625,11 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
-	
+	/**
+	 * This method verify that an element not exist in the UI
+	 * 
+	 * @param element The element should not exist in the UI
+	 */
 	@Override
 	public ExecutionResult ElementNotExist(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
@@ -746,7 +781,6 @@ public class SeleniumUIActions implements UIActions {
 		
 		return executionResult;
 	}
-
 	
 	public ExecutionResult GetRowValues(UIElement element) {
 		
@@ -777,6 +811,7 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 
+	
 	@Override
 	public ExecutionResult VerifyUI(String UIView) throws Exception{		
 		return UIElementsVerification.veryfyElements(UIView);
@@ -786,7 +821,6 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult ClickOnElement(String xpath, String[] params) {
 		return this.ClickOnElement(createUIElementFromXpath(xpath, params));
 	}
-
 
 	@Override
 	public ExecutionResult HasText(String xpath, String[] params, String text) {
@@ -857,6 +891,11 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult GetSelectedValue(String xpath, String[] params) {
 		return this.GetSelectedValue(createUIElementFromXpath(xpath, params));
 	}
+	
+	@Override
+	public ExecutionResult ElementNotExist(String xpath, String[] params) {
+		return this.ElementNotExist(createUIElementFromXpath(xpath, params));
+	}
 
 	@Override
 	public ExecutionResult GetText(String xpath, String[] params) {
@@ -870,7 +909,7 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult VerifyDescSort(String xpath, String[] params, String orderType) {
+	public ExecutionResult ElementIsOrdered(String xpath, String[] params, String orderType) {
 		return this.ElementIsOrdered(createUIElementFromXpath(xpath, params), orderType);
 	}
 
@@ -910,11 +949,9 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 	
-	
-
-	
-	
-	
+	public String getAttribute (String xpath, String[] params, String attribute){
+		return this.getAttribute(createUIElementFromXpath(xpath, params), attribute);
+	}
 	
 	private UIElement createUIElementFromXpath(String xpath, String [] args){
 		UIElement element = new UIElement();
@@ -925,8 +962,7 @@ public class SeleniumUIActions implements UIActions {
 		
 		return element;
 	}
-	
-	
+		
     private String processXpath(String xpath, String [] args)throws IllegalArgumentException {
 			//String path = ".//*[@id='carsTable']/tbody/tr[?]/td[?]/a";
 			String path = xpath;			

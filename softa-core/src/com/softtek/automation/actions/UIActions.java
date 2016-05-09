@@ -87,7 +87,7 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult GetValue(String xpath, String[] params);
 	
-	public ExecutionResult VerifyDescSort(String xpath, String[] params, String orderType);
+	public ExecutionResult ElementIsOrdered(String xpath, String[] params, String orderType);
 	
 	public ExecutionResult PutElementValueInCacheContext(String xpath, String[] params);
 	
@@ -100,5 +100,7 @@ public interface UIActions extends Actions {
 	public ExecutionResult GetRowValues(String xpath, String[] params);
 	
 	public ExecutionResult GetListValues(String xpath, String[] params);
+
+	public ExecutionResult ElementNotExist(String xpath, String[] params);
 		
 }
