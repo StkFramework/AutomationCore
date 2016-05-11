@@ -18,22 +18,28 @@ public abstract class  AbstractBusinessCase {
 			
 		if(result.isValidResult()){
 			
-			readDataSources(context,result);			
+			fillFormWithData(context, result);
 			
 			if(result.isValidResult()){
 				
-				fillWithData(context, result);
+				readDataSources(context,result);			
 				
 				if(result.isValidResult()){
-					checkCase(context,result);
+					
+					fillWithData(context, result);
+					
+					if(result.isValidResult()){
+						checkCase(context,result);
+					}
 				}
-			}
-		}
+			}			
+		}		
 		
 		return result;		
 	}
 	 
 	protected abstract void init(ExecutionContext context, ExecutionResult result);
+	protected abstract void fillFormWithData(ExecutionContext context, ExecutionResult result);
 	protected abstract void readDataSources(ExecutionContext context, ExecutionResult result);
 	protected abstract void fillWithData(ExecutionContext context, ExecutionResult result);	
 	protected abstract void checkCase(ExecutionContext context, ExecutionResult result);
