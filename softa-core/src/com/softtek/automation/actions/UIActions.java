@@ -47,6 +47,8 @@ public interface UIActions extends Actions {
 	
 	//public ExecutionResult GetRowValues(UIElement element);
 	
+	public ExecutionResult CountElements(UIElement element);
+	
 	public ExecutionResult VerifyUI(String UIView)throws Exception;
 	
 	/*
@@ -101,6 +103,9 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult GetListValues(String xpath, String[] params);
 
-	public ExecutionResult ElementNotExist(String xpath, String[] params);
+	public ExecutionResult ElementNotExist(String xpath, String[] params);	
+	
+	public ExecutionResult ExecuteJS(String script, String ... args);
+
 		
 }

@@ -9,11 +9,13 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 import com.google.common.base.Strings;
 import com.softtek.automation.ExecutionResult;
 import com.softtek.automation.TestLogger;
@@ -27,10 +29,7 @@ import com.softtek.automation.uiverifications.UIElementsVerification;
  * @author jesus.burquez
  *
  */
-/**
- * @author jesus.burquez
- *
- */
+
 public class SeleniumUIActions implements UIActions {
 
 	
@@ -319,6 +318,17 @@ public class SeleniumUIActions implements UIActions {
 	 * @param element The element should exist in the UI
 	 */
 	private WebElement findWebElement(UIElement element) {
+		By by = processBY(element);
+		return testDriver.getDriverInstance().findElement(by);
+
+	}
+	
+	private List<WebElement> findWebElements(UIElement element) {
+		By by = processBY(element);
+		return testDriver.getDriverInstance().findElements(by);
+	}
+	
+	private By processBY(UIElement element){
 		By by = null;
 
 		switch (element.getHow()) {
@@ -347,9 +357,9 @@ public class SeleniumUIActions implements UIActions {
 			break;
 		}
 
-		return testDriver.getDriverInstance().findElement(by);
-
+		return by;
 	}
+	
 	
 	/**
 	 * This method wait for the element to be displayed in the UI 
@@ -669,7 +679,7 @@ public class SeleniumUIActions implements UIActions {
 		
 		if(executionResult.isValidResult()){
 			executionResult.setObjectResult(webElement.getText());
-			TestLogger.INFO(this, "Getting text from element \"" + element.getId() + "\". Text is " + executionResult.getObjectResult().toString());
+			//TestLogger.INFO(this, "Getting text from element \"" + element.getId() + "\". Text is " + executionResult.getObjectResult().toString());
 		}else{			
 			executionResult.setMessage(new StringBuilder("Element \"")
 					.append(element.getId()).append("\" is <input> type. Can't retrieve text.").toString() );
@@ -781,6 +791,34 @@ public class SeleniumUIActions implements UIActions {
 		
 		return executionResult;
 	}
+	
+	@Override
+	public ExecutionResult CountElements(UIElement element) {
+		
+		ExecutionResult result = new ExecutionResult();
+
+		try{
+			
+			List<WebElement> elementsList = findWebElements(element);
+		
+			result.setResult(true);
+		
+			result.setObjectResult(Integer.valueOf(elementsList.size()));
+
+		} catch (final NoSuchElementException e) {
+			result.setResult(false);
+			result.setMessage(new StringBuilder().append("Waiting time out: ")
+				.append(element.getId())
+				.append(" not found.")
+				.append("xpath:")
+				.append(element.getUsing())
+				.toString());
+		}
+		
+		
+		return result;
+	}
+	
 	
 	public ExecutionResult GetRowValues(UIElement element) {
 		
@@ -928,8 +966,10 @@ public class SeleniumUIActions implements UIActions {
 	@Override
 	public ExecutionResult CountElements(String xpath, String[] params) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.CountElements(createUIElementFromXpath(xpath, params));
 	}
+	
+	
 
 	@Override
 	public ExecutionResult GetColumnValues(String xpath, String[] params) {
@@ -993,4 +1033,31 @@ public class SeleniumUIActions implements UIActions {
 		System.out.println("processed xpath -> "+xpath);
 		
 	}
+
+	@Override
+	public ExecutionResult ExecuteJS(String script, String ... args) {
+		
+		
+		RemoteWebDriver remoteDriver = (RemoteWebDriver)  testDriver.getDriverInstance();
+		
+		Object[] elements = new WebElement[args.length];
+		
+		int i = 0;
+		
+		for(String arg: args){
+			
+			UIElement uiElement = new UIElement();
+			uiElement.setHow(How.XPATH);
+			uiElement.setUsing(arg);
+			uiElement.setId("Anonymous.element");
+			elements[i] = findWebElement(uiElement);			
+		}
+		
+		remoteDriver.executeScript(script, elements);
+		
+		return null;
+	}
+	
+	
+	
 }

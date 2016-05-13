@@ -33,7 +33,7 @@ public abstract class AbstractStructure {
 		        if (property1 == null) continue;
 		        
 		        if (!property1.equals(property2)) {
-		            throw new AssertionError("Field values doesn't match comparing " + this.getClass().getCanonicalName() + 
+		            throw new AssertionError("Fail:Field values doesn't match comparing " + this.getClass().getCanonicalName() + 
 		            		" classes : [ currentObject."  + propertyName + " = " + property1 + " | compareObject." + propertyName +" = " + property2 + "]" );
 		        } 
 		    }
