@@ -2,11 +2,14 @@ package com.softtek.automation.structure;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+import com.softtek.automation.structure.mapping.ElementLink;
 
 public abstract class AbstractStructure {
 
@@ -96,5 +99,6 @@ public abstract class AbstractStructure {
 	}
 	
 
+	
 
 }

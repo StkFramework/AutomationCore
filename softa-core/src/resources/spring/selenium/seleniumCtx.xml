@@ -10,8 +10,8 @@
        	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         
    
-	<bean id ="cucumberCommonUIStepsAdapter"  class="com.softtek.automation.steps.cucumber.CucumberCommonUIStepsAdapter">
-		<property name="UIActions" ref="IUActions" />	
+	<bean id ="cucumberCommonUIStepsAdapter"  class="com.softtek.automation.steps.cucumber.CucumberCommonUIStepsAdapter" primary="true">
+		<property name="UIActions" ref="UIActions" />	
 		<property name="UIElementFactory" ref="UIElementFactory" />		
 	</bean>	
 	
@@ -19,34 +19,33 @@
 		<property name="viewsSource" ref="viewSourcesPath" />						
 	</bean>
 	
-	<bean id ="IUActions"  class="com.softtek.automation.actions.selenium.SeleniumUIActions">	
-		<property name="testDriver" ref="testDriver" />					
+	<bean id ="UIActions"  class="com.softtek.automation.actions.selenium.SeleniumUIActions" >	
+		<property name="testDriver" ref="testDriver" />	
+		<property name="UIElementsVerification" ref="UIElementsVerification"/>				
 	</bean>
 	
-	<bean id ="testDriver"  class="com.softtek.automation.driver.selenium.SeleniumDriver">	
+	<bean id ="testDriver"  class="com.softtek.automation.driver.selenium.SeleniumDriver" >	
 		<property name="properties">
 			<props>
-				<prop key="driver">${driver}</prop>
+				<prop key="driverType">${driverType}</prop>
 				<prop key="browser">${browser}</prop>			
 			</props>
 		</property>				
 	</bean>	
 	
-	<bean id ="cucumberCommonAppStepsAdapter"  class="com.softtek.automation.steps.cucumber.CucumberCommonAppStepsAdapter">
-		<property name="AppActions" ref="seleniumAppActions" />
+	<bean id ="cucumberCommonAppStepsAdapter"  class="com.softtek.automation.steps.cucumber.CucumberCommonAppStepsAdapter" primary="true">
+		<property name="AppActions" ref="AppActions" />
 		<property name="ExecutionContext" ref="ExecutionContext" />		
 	</bean>
 	
-	<bean id ="AppActions"  class="com.softtek.automation.actions.selenium.SeleniumAppActions">
+	<bean id ="AppActions"  class="com.softtek.automation.actions.selenium.SeleniumAppActions" autowire="byName">
 		<property name="testDriver" ref="testDriver" />
 		<property name="applicationsSet" ref="applicationsSet" />		
 	</bean>
 	
-	
-	
-	
-	
-	
-	
+	<bean id ="UIElementsVerification"  class="com.softtek.automation.uiverifications.SeleniumUIElementsVerifications" autowire="byName">
+		<property name="testDriver" ref="testDriver" />
+		<property name="viewsSource" ref="viewSourcesPath" />		
+	</bean>	
 	
 </beans>
