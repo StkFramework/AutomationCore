@@ -485,7 +485,7 @@ public class SeleniumUIActions implements UIActions {
 		isElementDisplayed(element, webElement, executionResult);
 
 		if (executionResult.isValidResult()) {
-			executionResult.setResult(webElement.getAttribute("size").equals(
+			executionResult.setResult(webElement.getAttribute("maxlength").equals(
 					Integer.toString(length)));
 			executionResult.setMessage(executionResult.isValidResult() ? null
 					: new StringBuilder().append("Element ")
