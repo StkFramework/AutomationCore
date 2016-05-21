@@ -11,7 +11,7 @@ public interface UIActions extends Actions {
 
 	public ExecutionResult ElementContainsText(UIElement element, String text);
 
-	public ExecutionResult TypeTextOnElement(UIElement element, String text);
+	public ExecutionResult TypeTextOn(UIElement element, String text);
 
 	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
 
@@ -57,7 +57,7 @@ public interface UIActions extends Actions {
 
 	public ExecutionResult ClickOnElement(String xpath, String[] params);
 	
-	public ExecutionResult HasText(String xpath, String[] params, String text);
+	public ExecutionResult ElementHasText(String xpath, String[] params, String text);
 	
 	public ExecutionResult ContainsText(String xpath, String[] params, String text);
 	
@@ -73,7 +73,7 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult SelectListElement(String selectedItem, String xpath, String[] params);
 	
-	public ExecutionResult MouseOver(String xpath, String[] params);
+	public ExecutionResult MoveMouseOverElement(String xpath, String[] params);
 	
 	public ExecutionResult IsSelected(String xpath, String[] params);
 	
@@ -106,6 +106,8 @@ public interface UIActions extends Actions {
 	public ExecutionResult ElementNotExist(String xpath, String[] params);	
 	
 	public ExecutionResult ExecuteJS(String script, String ... args);
+
+	public ExecutionResult SelectValueFromDropdownElement(String xpath,	String[] params, String value);
 
 		
 }

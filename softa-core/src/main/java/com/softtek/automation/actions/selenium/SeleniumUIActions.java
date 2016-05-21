@@ -32,7 +32,6 @@ import com.softtek.automation.uiverifications.UIElementsVerification;
 
 public class SeleniumUIActions implements UIActions {
 
-	
 	private TestDriver<WebDriver> testDriver;
 
 	private UIElementsVerification UIElementsVerification;	
@@ -54,7 +53,6 @@ public class SeleniumUIActions implements UIActions {
 	public TestDriver getTestDriver() {
 		return this.testDriver;
 	}
-
 		
 	/**
 	 * This method perform a click on an element
@@ -160,7 +158,7 @@ public class SeleniumUIActions implements UIActions {
 	 * @param text This is the text that will be write in the element
 	 */
 	@Override
-	public ExecutionResult TypeTextOnElement(UIElement element, String text) {
+	public ExecutionResult TypeTextOn(UIElement element, String text) {
 		ExecutionResult executionResult = new ExecutionResult();
 
 		WebElement webElement = waitForElement(element,
@@ -197,8 +195,19 @@ public class SeleniumUIActions implements UIActions {
 				findWebElement(element), 30L, executionResult);
 
 		isElementDisplayed(element, webElement, executionResult);
+		
+		Select select = new Select(webElement);
 
-		return null;
+			executionResult.setResult(webElement.isEnabled());
+			if (executionResult.isValidResult()) {
+				select.selectByValue(text);
+			} else {
+				executionResult.setMessage(new StringBuilder("Element \"")
+						.append(element.getId())
+						.append("\" is not enabled for Select.").toString());
+
+			}
+		return executionResult;
 	}
 	
 	/**
@@ -359,8 +368,7 @@ public class SeleniumUIActions implements UIActions {
 
 		return by;
 	}
-	
-	
+		
 	/**
 	 * This method wait for the element to be displayed in the UI 
 	 * 
@@ -819,7 +827,6 @@ public class SeleniumUIActions implements UIActions {
 		return result;
 	}
 	
-	
 	public ExecutionResult GetRowValues(UIElement element) {
 		
 		ExecutionResult executionResult = new ExecutionResult();
@@ -849,7 +856,6 @@ public class SeleniumUIActions implements UIActions {
 		return null;
 	}
 
-	
 	@Override
 	public ExecutionResult VerifyUI(String UIView) throws Exception{		
 		return UIElementsVerification.veryfyElements(UIView);
@@ -861,7 +867,7 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult HasText(String xpath, String[] params, String text) {
+	public ExecutionResult ElementHasText(String xpath, String[] params, String text) {
 		return this.ElementHasText(createUIElementFromXpath(xpath, params), text);
 	}
 
@@ -872,7 +878,7 @@ public class SeleniumUIActions implements UIActions {
 
 	@Override
 	public ExecutionResult TypeTextOn(String xpath, String[] params, String text) {
-		return this.TypeTextOnElement(createUIElementFromXpath(xpath, params), text);
+		return this.TypeTextOn(createUIElementFromXpath(xpath, params), text);
 	}
 
 	@Override
@@ -901,7 +907,7 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult MouseOver(String xpath, String[] params) {
+	public ExecutionResult MoveMouseOverElement(String xpath, String[] params) {
 		return this.MoveMouseOverElement(createUIElementFromXpath(xpath, params));
 	}
 
@@ -950,6 +956,11 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult ElementIsOrdered(String xpath, String[] params, String orderType) {
 		return this.ElementIsOrdered(createUIElementFromXpath(xpath, params), orderType);
 	}
+	
+	@Override
+	public ExecutionResult SelectValueFromDropdownElement(String xpath, String[] params, String value) {
+		return this.SelectValueFromDropdownElement(createUIElementFromXpath(xpath, params), value);
+	}
 
 	@Override
 	public ExecutionResult PutElementValueInCacheContext(String xpath, String[] params) {
@@ -969,8 +980,6 @@ public class SeleniumUIActions implements UIActions {
 		return this.CountElements(createUIElementFromXpath(xpath, params));
 	}
 	
-	
-
 	@Override
 	public ExecutionResult GetColumnValues(String xpath, String[] params) {
 		// TODO Auto-generated method stub
@@ -1023,7 +1032,6 @@ public class SeleniumUIActions implements UIActions {
 			return path;
 	}
 	
-	
 	public static void main(String parms []){
 		String xpath = ".//*[@id='carsTable']/tbody/tr[:p]/td[:p]/a";
 		String [] args = new String[]{"1" ,"4"};		
@@ -1057,7 +1065,5 @@ public class SeleniumUIActions implements UIActions {
 		
 		return null;
 	}
-	
-	
-	
+		
 }

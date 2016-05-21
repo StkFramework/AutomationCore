@@ -38,8 +38,8 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.ElementContainsText(element, text));
 	}
 
-	protected void typeTextOnElement(UIElement element, String text) {
-		assertTrue(UIActions.TypeTextOnElement(element, text));
+	protected void typeTextOn(UIElement element, String text) {
+		assertTrue(UIActions.TypeTextOn(element, text));
 	}
 	
 	protected void isDisable(UIElement element){
