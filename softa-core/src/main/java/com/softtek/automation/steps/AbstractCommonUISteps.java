@@ -43,7 +43,7 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	}
 	
 	protected void isDisable(UIElement element){
-		assertTrue(UIActions.IsDisable(element));
+		assertTrue(UIActions.IsDisabled(element));
 	}
 	
 	protected void VerifyMaxLengthText(UIElement element, int length){
@@ -75,7 +75,7 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	}
 	
 	protected void selectListElement(String value, UIElement element){
-		assertTrue(UIActions.SelecElementFromtList(value, element));
+		assertTrue(UIActions.SelectElementFromtList(value, element));
 	}
 	
 	protected void elementIsOrdered(UIElement element, String orderType) {

@@ -2,7 +2,6 @@ package com.softtek.automation.actions.selenium;
 
 import java.util.List;
 
-
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,6 +122,15 @@ public class SeleniumAppActions implements AppActions {
 	public ExecutionResult WaitForSeconds(String seconds) throws Exception {
 		Thread.sleep( Integer.parseInt(seconds) * ConstantsUtils.TIME_SLEEP_1x );
 		return new ExecutionResult(true,null);
+	}
+	
+	//Adding this method just to verify UIActions Complex -- You can deleted any time
+	@Override
+	public ExecutionResult MoveToUrl(String url) throws Exception {
+		ExecutionResult result = new ExecutionResult();
+		testDriver.getDriverInstance().navigate().to(url);
+		WaitForSeconds("3");
+		return result;
 	}
 
 	

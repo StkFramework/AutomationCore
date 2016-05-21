@@ -15,7 +15,7 @@ public interface UIActions extends Actions {
 
 	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
 
-	public ExecutionResult IsDisable(UIElement element);
+	public ExecutionResult IsDisabled(UIElement element);
 	
 	public ExecutionResult VerifyMaxLengthText(UIElement element, int length);
 	
@@ -41,7 +41,7 @@ public interface UIActions extends Actions {
 
 	public ExecutionResult ElementNotExist(UIElement element);
 	
-	public ExecutionResult SelecElementFromtList(String selectedItem, UIElement element);
+	public ExecutionResult SelectElementFromtList(String selectedItem, UIElement element);
 	
 	public ExecutionResult GetSelectedValue(UIElement element);
 	
@@ -59,17 +59,17 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult ElementHasText(String xpath, String[] params, String text);
 	
-	public ExecutionResult ContainsText(String xpath, String[] params, String text);
+	public ExecutionResult ElementContainsText(String xpath, String[] params, String text);
 	
 	public ExecutionResult TypeTextOn(String xpath, String[] params, String text);
 	
 	public ExecutionResult IsDisabled(String xpath, String[] params);
 	
-	public ExecutionResult IsEnabled(String xpath, String[] params);
+	public ExecutionResult ElementIsEnabled(String xpath, String[] params);
 	
 	public ExecutionResult VerifyMaxLengthText(String xpath, String[] params, int length);
 	
-	public ExecutionResult IsElementType(String xpath, String[] params, String tagType);
+	public ExecutionResult ElementIsTypeOf(String xpath, String[] params, String tagType);
 	
 	public ExecutionResult SelectListElement(String selectedItem, String xpath, String[] params);
 	
@@ -77,7 +77,7 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult IsSelected(String xpath, String[] params);
 	
-	public ExecutionResult HasFocus(String xpath, String[] params);
+	public ExecutionResult ElementHasFocus(String xpath, String[] params);
 	
 	public ExecutionResult MoveFocusTo(String xpath, String[] params);
 	

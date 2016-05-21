@@ -26,4 +26,6 @@ public interface AppActions extends Actions {
 	
 	ExecutionResult WaitForSeconds(String seconds) throws Exception;
 
+	ExecutionResult MoveToUrl(String name) throws Exception;
+
 }

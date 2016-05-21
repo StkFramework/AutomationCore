@@ -185,6 +185,12 @@ public class SeleniumUIActions implements UIActions {
 		return executionResult;
 	}
 
+	/**
+	 * This method select value from dropdown element
+	 * 
+	 * @param element The element is where should select the option
+	 * @param text This is the text for the option value
+	 */
 	@Override
 	public ExecutionResult SelectValueFromDropdownElement(UIElement element,
 			String text) {
@@ -454,7 +460,7 @@ public class SeleniumUIActions implements UIActions {
 	 * @param element The element will be verify to check if it's disable
 	 */
 	@Override
-	public ExecutionResult IsDisable(UIElement element) {
+	public ExecutionResult IsDisabled(UIElement element) {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
@@ -732,7 +738,7 @@ public class SeleniumUIActions implements UIActions {
 	 * @param element The dropdown element where will be selected the element
 	 */
 	@Override
-	public ExecutionResult SelecElementFromtList(String selectedItem, UIElement element) {
+	public ExecutionResult SelectElementFromtList(String selectedItem, UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 		
 		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
@@ -792,6 +798,7 @@ public class SeleniumUIActions implements UIActions {
 		selectedOption = getSelectedOption.getText();
 		
 		if(executionResult.isValidResult()){
+			executionResult.setObjectResult(selectedOption);
 			executionResult.setResult(!Strings.isNullOrEmpty(selectedOption));
 			executionResult.setMessage(executionResult.isValidResult() ? null : new StringBuilder()
 			.append("Selected value is null or empty").toString());
@@ -861,6 +868,8 @@ public class SeleniumUIActions implements UIActions {
 		return UIElementsVerification.veryfyElements(UIView);
 	}
 
+	
+	//Overloading Methods
 	@Override
 	public ExecutionResult ClickOnElement(String xpath, String[] params) {
 		return this.ClickOnElement(createUIElementFromXpath(xpath, params));
@@ -872,7 +881,7 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult ContainsText(String xpath, String[] params, String text) {
+	public ExecutionResult ElementContainsText(String xpath, String[] params, String text) {
 		return this.ElementContainsText(createUIElementFromXpath(xpath, params), text);
 	}
 
@@ -883,11 +892,11 @@ public class SeleniumUIActions implements UIActions {
 
 	@Override
 	public ExecutionResult IsDisabled(String xpath, String[] params) {
-		return this.IsDisable(createUIElementFromXpath(xpath, params));
+		return this.IsDisabled(createUIElementFromXpath(xpath, params));
 	}
 
 	@Override
-	public ExecutionResult IsEnabled(String xpath, String[] params) {
+	public ExecutionResult ElementIsEnabled(String xpath, String[] params) {
 		return this.ElementIsEnabled(createUIElementFromXpath(xpath, params));
 	}
 
@@ -897,13 +906,13 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult IsElementType(String xpath, String[] params, String tagType) {
+	public ExecutionResult ElementIsTypeOf(String xpath, String[] params, String tagType) {
 		return this.ElementIsTypeOf(createUIElementFromXpath(xpath, params), tagType);
 	}
 
 	@Override
 	public ExecutionResult SelectListElement(String selectedItem, String xpath, String[] params) {
-		return this.SelecElementFromtList(selectedItem, createUIElementFromXpath(xpath, params));
+		return this.SelectElementFromtList(selectedItem, createUIElementFromXpath(xpath, params));
 	}
 
 	@Override
@@ -917,7 +926,7 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult HasFocus(String xpath, String[] params) {
+	public ExecutionResult ElementHasFocus(String xpath, String[] params) {
 		return this.ElementHasFocus(createUIElementFromXpath(xpath, params));
 	}
 
