@@ -1,13 +1,16 @@
 package com.softtek.automation.functions;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
 
@@ -60,4 +63,40 @@ public class CSVFunctions <T>{
 		return resultArray;
 	}
 	
+	public static void updateCSV(String fileToUpdate, String replace,
+		    int row, int col) throws IOException {
+
+		File inputFile = new File(fileToUpdate);
+
+		// Read existing file 
+		CSVReader reader = new CSVReader(new FileReader(inputFile), ',');
+		List<String[]> csvBody = reader.readAll();
+		// get CSV row column  and replace with by using row and column
+		csvBody.get(row)[col] = replace;
+		reader.close();
+
+		// Write to CSV file which is open
+		CSVWriter writer = new CSVWriter(new FileWriter(inputFile), ',');
+		writer.writeAll(csvBody);
+		writer.flush();
+		writer.close();
+	}
+	
+	public static String obtainCSVValue(String fileToUpdate, int row, int col) throws IOException {
+
+		File inputFile = new File(fileToUpdate);
+
+		// Read existing file 
+		CSVReader reader = new CSVReader(new FileReader(inputFile), ',');
+		List<String[]> csvBody = reader.readAll();
+		// get CSV row column  and replace with by using row and column
+		String getValueFromCsv =  csvBody.get(row)[col];
+		reader.close();
+		return getValueFromCsv;
+	}
+	
+	
 }
+
+
+
