@@ -67,7 +67,7 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 
 			if(executionResult.isValidResult()){
 				
-				waitForElement(element,webElement, 30L, executionResult,view);
+				//waitForElement(element,webElement, 30L, executionResult,view);
 
 				isElementDisplayed(element, webElement, executionResult,view);		
 				
@@ -167,7 +167,8 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 		
 		try{
 			
-			webElement = testDriver.getDriverInstance().findElement(by);
+			webElement = (new WebDriverWait(testDriver.getDriverInstance(),10))
+					.until(ExpectedConditions.presenceOfElementLocated(by));
 		
 		}catch(NoSuchElementException e){
 			result.setResult(false);

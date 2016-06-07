@@ -64,8 +64,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -98,8 +97,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -130,8 +128,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -161,8 +158,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult TypeTextOn(UIElement element, String text) {
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -197,8 +193,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 		
@@ -226,8 +221,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -253,8 +247,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -281,8 +274,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult MoveMouseOverElement(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -309,8 +301,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult ElementHasFocus(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -334,6 +325,11 @@ public class SeleniumUIActions implements UIActions {
 	 */
 	private WebElement findWebElement(UIElement element) {
 		By by = processBY(element);
+		
+		WebElement webElement = (new WebDriverWait(testDriver.getDriverInstance(),10))
+				.until(ExpectedConditions.presenceOfElementLocated(by));
+		
+		
 		return testDriver.getDriverInstance().findElement(by);
 
 	}
@@ -464,8 +460,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -493,8 +488,7 @@ public class SeleniumUIActions implements UIActions {
 
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -520,8 +514,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult IsSelected(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -546,8 +539,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult MoveFocusTo(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element,
-				findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -583,7 +575,7 @@ public class SeleniumUIActions implements UIActions {
 		
 		boolean getResult = false;
 	
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 	
 		isElementDisplayed(element, webElement, executionResult);
 		
@@ -622,7 +614,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult ElementIsOrdered(UIElement element, String orderType) {
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 		
@@ -685,7 +677,7 @@ public class SeleniumUIActions implements UIActions {
 		
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -713,7 +705,7 @@ public class SeleniumUIActions implements UIActions {
 		
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 
@@ -741,7 +733,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult SelectElementFromtList(String selectedItem, UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 		
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 		
 		List<WebElement> getSelectedOption;
 		
@@ -783,7 +775,7 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult GetSelectedValue(UIElement element) {
 		ExecutionResult executionResult = new ExecutionResult();
 		
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 		
 		WebElement getSelectedOption;
 		
@@ -838,7 +830,7 @@ public class SeleniumUIActions implements UIActions {
 		
 		ExecutionResult executionResult = new ExecutionResult();
 
-		WebElement webElement = waitForElement(element, findWebElement(element), 30L, executionResult);
+		WebElement webElement = findWebElement(element);
 
 		isElementDisplayed(element, webElement, executionResult);
 		
