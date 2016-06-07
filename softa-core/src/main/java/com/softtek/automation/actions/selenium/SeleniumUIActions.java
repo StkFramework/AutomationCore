@@ -330,13 +330,18 @@ public class SeleniumUIActions implements UIActions {
 				.until(ExpectedConditions.presenceOfElementLocated(by));
 		
 		
-		return testDriver.getDriverInstance().findElement(by);
+		return webElement;
 
 	}
 	
 	private List<WebElement> findWebElements(UIElement element) {
 		By by = processBY(element);
-		return testDriver.getDriverInstance().findElements(by);
+		
+		List<WebElement> webElements = (new WebDriverWait(testDriver.getDriverInstance(),10))
+				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
+		
+		
+		return webElements;
 	}
 	
 	private By processBY(UIElement element){
