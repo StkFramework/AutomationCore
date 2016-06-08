@@ -201,7 +201,7 @@ public class SeleniumUIActions implements UIActions {
 
 			executionResult.setResult(webElement.isEnabled());
 			if (executionResult.isValidResult()) {
-				select.selectByValue(text);
+				select.selectByVisibleText(text);
 			} else {
 				executionResult.setMessage(new StringBuilder("Element \"")
 						.append(element.getId())

@@ -98,5 +98,10 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected void verifyUI(String UIView) throws Exception{
 		assertTrue(UIActions.VerifyUI(UIView));
 	}
+	
+	protected void selectValueFromDropdownElement(UIElement element, String value){
+		
+		assertTrue(UIActions.SelectValueFromDropdownElement(element, value));		
+	}
 		
 }

@@ -98,4 +98,10 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	public void i_verify_ui(String UIView) throws Exception {		
 		this.verifyUI(UIView);		
 	}
+	
+	@Then("^(?i:Select value) '(.+)' (?i:from dropdown) '(.+)'$")
+	public void select_value_from_dropdown_element(String value, String element) throws Exception{
+		this.selectValueFromDropdownElement(this.UIElementFactory.createElement(element), value);
+	}
+
 }

@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -19,6 +20,7 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 
 	private static final String FIREFOX = "firefox";
 	private static final String IE = "ie";
+	private static final String CHROME = "chrome";
 	private static final String WEB_DRIVER = "webdriver";
 	private static final String GRID_DRIVER = "grid";
 
@@ -60,6 +62,13 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 					capabilities.setVersion("11");
 					webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
 				}
+				else if (browser.equals(CHROME)) {
+					System.setProperty("webdriver.chrome.driver",
+							"src/main/resources/ieDriver/IEDriverServer.exe");
+					capabilities = DesiredCapabilities.chrome();
+					
+					webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+				}
 				else {
 					throw new IllegalArgumentException("Browser is not supported");
 				}
@@ -72,13 +81,19 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 				}
 				else if (browser.equals(IE)) {
 					System.setProperty("webdriver.ie.driver",
-							"src/main/resources/ieDriver/IEDriverServer.exe");
+							"src/main/resources/drivers/IEDriverServer.exe");
 					capabilities = DesiredCapabilities.internetExplorer();
 					capabilities
 							.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
 									true);
 					capabilities.setVersion("11");
 					webDriver = new InternetExplorerDriver(capabilities);
+				}
+				else if (browser.equals(CHROME)) {
+					System.setProperty("webdriver.chrome.driver",
+							"src/main/resources/drivers/chromedriver.exe");
+					capabilities = DesiredCapabilities.chrome();					
+					webDriver = new ChromeDriver(capabilities);
 				}
 				else {
 					throw new IllegalArgumentException("Browser is not supported");
