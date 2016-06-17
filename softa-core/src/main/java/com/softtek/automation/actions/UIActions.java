@@ -51,6 +51,18 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult VerifyUI(String UIView)throws Exception;
 	
+	public ExecutionResult PutElementValueInCacheContext(UIElement element, String key);
+	
+	public ExecutionResult PutElementValueInVolatileContext(UIElement element, String key);
+	
+	public ExecutionResult PutElementTextInCacheContext(UIElement element, String key);
+	
+	public ExecutionResult PutElementTextInVolatileContext(UIElement element, String key);
+	
+	public ExecutionResult PutTextInCacheContext(String text, String key);
+	
+	public ExecutionResult PutTextInVolatileContext(String text, String key);
+	
 	/*
 	 *Overload actions 
 	 */
@@ -89,11 +101,7 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult GetValue(String xpath, String[] params);
 	
-	public ExecutionResult ElementIsOrdered(String xpath, String[] params, String orderType);
-	
-	public ExecutionResult PutElementValueInCacheContext(String xpath, String[] params);
-	
-	public ExecutionResult PutElementValueInVolatileContext(String xpath, String[] params);
+	public ExecutionResult ElementIsOrdered(String xpath, String[] params, String orderType);	
 	
 	public ExecutionResult CountElements(String xpath, String[] params);
 	

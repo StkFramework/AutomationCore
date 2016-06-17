@@ -14,10 +14,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 import com.google.common.base.Strings;
+import com.softtek.automation.ExecutionContext;
 import com.softtek.automation.ExecutionResult;
+import com.softtek.automation.ExpressionParserAdapter;
 import com.softtek.automation.TestLogger;
 import com.softtek.automation.actions.UIActions;
 import com.softtek.automation.driver.TestDriver;
@@ -36,8 +41,18 @@ public class SeleniumUIActions implements UIActions {
 
 	private UIElementsVerification UIElementsVerification;	
 	
-	public UIElementsVerification getUIElementsVerification() {
-		return UIElementsVerification;
+	private ExecutionContext executionContext;
+	
+	private ExpressionParserAdapter expressionParserAdapter;
+	
+	
+	
+	//public UIElementsVerification getUIElementsVerification() {
+	//	return UIElementsVerification;
+	//}
+
+	public void setExpressionParserAdapter(ExpressionParserAdapter expressionParserAdapter) {
+		this.expressionParserAdapter = expressionParserAdapter;
 	}
 
 	public void setUIElementsVerification(UIElementsVerification uIElementsVerification) {
@@ -53,7 +68,13 @@ public class SeleniumUIActions implements UIActions {
 	public TestDriver getTestDriver() {
 		return this.testDriver;
 	}
-		
+	
+	
+	
+	public void setExecutionContext(ExecutionContext executionContext) {
+		this.executionContext = executionContext;
+	}
+
 	/**
 	 * This method perform a click on an element
 	 * 
@@ -101,9 +122,18 @@ public class SeleniumUIActions implements UIActions {
 
 		isElementDisplayed(element, webElement, executionResult);
 
-		if (executionResult.isValidResult() == true) {
-
-			String textValue = webElement.getText();
+		if (executionResult.isValidResult() == true) {			
+			
+			//String textValue = webElement.getText();
+			
+			String textValue = this.expressionParserAdapter.parseExpression(text, executionContext);
+			
+			if(textValue == null){
+				
+				textValue = webElement.getText();
+			}
+			
+			
 			executionResult.setResult(textValue.equals(text));
 			executionResult.setMessage(executionResult.isValidResult() ? null
 					: new StringBuilder().append("Element ")
@@ -133,8 +163,16 @@ public class SeleniumUIActions implements UIActions {
 		isElementDisplayed(element, webElement, executionResult);
 
 		if (executionResult.isValidResult() == true) {
-
-			String textValue = webElement.getText();
+			
+			//String textValue = webElement.getText();
+			
+			String textValue = this.expressionParserAdapter.parseExpression(text, executionContext);
+			
+			if(textValue == null){
+				
+				textValue = webElement.getText();
+			}
+			
 			executionResult.setResult(textValue.contains(text));
 			executionResult.setMessage(executionResult.isValidResult() ? null
 					: new StringBuilder().append("Element ")
@@ -147,6 +185,9 @@ public class SeleniumUIActions implements UIActions {
 
 		return executionResult;
 	}
+	
+	
+	
 	
 	/**
 	 * This method write text in an element
@@ -167,8 +208,15 @@ public class SeleniumUIActions implements UIActions {
 			executionResult.setResult(webElement.isEnabled());
 
 			if (executionResult.isValidResult()) {
-				webElement.clear();
-				webElement.sendKeys(text);
+				webElement.clear();								
+				
+				String textValue = this.expressionParserAdapter.parseExpression(text, executionContext);
+							
+				if(textValue == null){					 
+					webElement.sendKeys(text);
+				}else{					
+					webElement.sendKeys(textValue);
+				}				
 			} else {
 				executionResult.setMessage(new StringBuilder("Element \"")
 						.append(element.getId())
@@ -201,7 +249,14 @@ public class SeleniumUIActions implements UIActions {
 
 			executionResult.setResult(webElement.isEnabled());
 			if (executionResult.isValidResult()) {
-				select.selectByVisibleText(text);
+				
+				String textValue = this.expressionParserAdapter.parseExpression(text, executionContext);
+				
+				if(textValue == null){					 
+					select.selectByVisibleText(text);
+				}else{					
+					select.selectByVisibleText(textValue);
+				}			
 			} else {
 				executionResult.setMessage(new StringBuilder("Element \"")
 						.append(element.getId())
@@ -969,17 +1024,62 @@ public class SeleniumUIActions implements UIActions {
 	}
 
 	@Override
-	public ExecutionResult PutElementValueInCacheContext(String xpath, String[] params) {
-		// TODO Auto-generated method stub
-		return null;
+	public ExecutionResult PutElementValueInCacheContext(UIElement element, String key) {
+		
+		ExecutionResult result = this.GetValue(element);
+		
+		if(result.isValidResult()) executionContext.putElementOnCache(key, result.getObjectResult().toString());
+		
+		
+		return result;
 	}
 
 	@Override
-	public ExecutionResult PutElementValueInVolatileContext(String xpath, String[] params) {
-		// TODO Auto-generated method stub
-		return null;
+	public ExecutionResult PutElementValueInVolatileContext(UIElement element, String key) {
+		
+		ExecutionResult result = this.GetValue(element);
+		
+		if(result.isValidResult()) executionContext.putElement(key, result.getObjectResult().toString());
+		
+		
+		return result;
+	}
+	
+	
+	@Override
+	public ExecutionResult PutElementTextInCacheContext(UIElement element, String key) {
+		
+		ExecutionResult result = this.GetText(element);
+		
+		if(result.isValidResult()) executionContext.putElementOnCache(key, result.getObjectResult().toString());
+		
+		
+		return result;
 	}
 
+	@Override
+	public ExecutionResult PutElementTextInVolatileContext(UIElement element, String key) {
+		
+		ExecutionResult result = this.GetText(element);
+		
+		if(result.isValidResult()) executionContext.putElement(key, result.getObjectResult().toString());
+		
+		
+		return result;
+	}
+	
+	@Override
+	public ExecutionResult PutTextInCacheContext(String text, String key) {
+		executionContext.putElementOnCache(key.trim(), text.trim());		
+		return new ExecutionResult(true, null);
+	}
+
+	@Override
+	public ExecutionResult PutTextInVolatileContext(String text, String key) {
+		executionContext.putElement(key.trim(), text.trim());			
+		return new ExecutionResult(true, null);
+	}
+	
 	@Override
 	public ExecutionResult CountElements(String xpath, String[] params) {
 		// TODO Auto-generated method stub

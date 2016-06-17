@@ -21,10 +21,15 @@
 	
 	<bean id ="UIActions"  class="com.softtek.automation.actions.selenium.SeleniumUIActions" >	
 		<property name="testDriver" ref="testDriver" />	
-		<property name="UIElementsVerification" ref="UIElementsVerification"/>				
+		<property name="UIElementsVerification" ref="UIElementsVerification"/>	
+		<property name="executionContext" ref="ExecutionContext"/>
+		<property name="expressionParserAdapter" ref="expressionParserAdapter"/>		
+					
 	</bean>
 	
-	<bean id ="testDriver"  class="com.softtek.automation.driver.selenium.SeleniumDriver" >	
+	<bean id ="expressionParserAdapter"  class="com.softtek.automation.ExpressionParserAdapter" scope="singleton"></bean>	
+	
+	<bean id ="testDriver"  class="com.softtek.automation.driver.selenium.SeleniumDriver" scope="singleton">	
 		<property name="properties">
 			<props>
 				<prop key="driverType">${driverType}</prop>

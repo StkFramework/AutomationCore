@@ -104,4 +104,35 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.SelectValueFromDropdownElement(element, value));		
 	}
 		
+	protected void putElementValueInCacheContext(UIElement element, String key){
+		
+		assertTrue(UIActions.PutElementValueInCacheContext(element, key));
+	}	
+	
+	protected void putElementTextInCacheContext(UIElement element, String key){
+		
+		assertTrue(UIActions.PutElementTextInCacheContext(element, key));
+	}
+	
+	protected void putElementValueInVolatileContext(UIElement element, String key){
+		
+		assertTrue(UIActions.PutElementValueInVolatileContext(element, key));
+	}
+	
+	protected void putElementTextInVolatileContext(UIElement element, String key){
+		
+		assertTrue(UIActions.PutElementTextInVolatileContext(element, key));
+	}
+	
+	
+	protected void putTextInCacheContext(String key, String text){
+		
+		assertTrue(UIActions.PutTextInCacheContext(text,key));
+	}
+	
+	protected void putTextInVolatileContext(String key, String text){
+		
+		assertTrue(UIActions.PutTextInVolatileContext(text,key));
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.softtek.automation.actions.selenium;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,17 @@ public class SeleniumAppActions implements AppActions {
 		List<Application> applicationsList = applicationsSet.getApplications();
 				
 		for (Application app : applicationsList) {			
-			if (application.equals(app.getName())) {				
+			if (application.equals(app.getName())) {
+				
+							
+				
+				if(((RemoteWebDriver)testDriver.getDriverInstance()).getSessionId() == null){
+					
+					testDriver.setUpDriver();
+				}
+				 
+				
+				TestLogger.getInstance(this).info("Using browser with sessionID -> " + ((RemoteWebDriver)testDriver.getDriverInstance()).getSessionId());
 				
 				testDriver.getDriverInstance().manage().window().maximize();
 				testDriver.getDriverInstance().manage().deleteAllCookies();
@@ -77,8 +88,9 @@ public class SeleniumAppActions implements AppActions {
 				TestLogger.getInstance(this).info("application.environment = " + app.getEnvironment());
 				TestLogger.getInstance(this).info("application.properties = " + app.getProperties());
 
-				testDriver.getDriverInstance().get(
-						app.getProperties().get("url."+ app.getEnvironment()).toString());
+				testDriver.getDriverInstance().get(app.getProperties().get("url."+ app.getEnvironment()).toString());		
+				
+				//testDriver.getDriverInstance().navigate().to(app.getProperties().get("url."+ app.getEnvironment()).toString());
 			
 				applicationFound = true;
 				break;
@@ -114,7 +126,11 @@ public class SeleniumAppActions implements AppActions {
 
 	@Override
 	public ExecutionResult CloseCurrentApp() {
-		testDriver.getDriverInstance().close();
+		//testDriver.getDriverInstance().close();
+		
+		TestLogger.getInstance(this).info("Closing browser with sessionID -> " + ((RemoteWebDriver)testDriver.getDriverInstance()).getSessionId());
+		testDriver.getDriverInstance().quit();
+		
 		return new ExecutionResult(true,null);
 	}
 

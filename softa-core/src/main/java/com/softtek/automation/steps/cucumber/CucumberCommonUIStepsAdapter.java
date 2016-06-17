@@ -24,7 +24,7 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	}	
 	
 	@When("^(?i:I type text) '(.+)' (?i:on element) '(.+)'$")
-	public void i_type_text_on(String text,String element) throws Exception {
+	public void i_type_text_on(String text,String element) throws Exception {		
 		this.typeTextOn(this.UIElementFactory.createElement(element), text);		
 	}
 	
@@ -102,6 +102,37 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	@Then("^(?i:Select value) '(.+)' (?i:from dropdown) '(.+)'$")
 	public void select_value_from_dropdown_element(String value, String element) throws Exception{
 		this.selectValueFromDropdownElement(this.UIElementFactory.createElement(element), value);
+	}	
+	
+	@Then("^(?i:Put element) '(.+)' (?i:value with key) '(.+)' (?i:in cache context)$")
+	public void put_element_value_in_cache_context(String key, String element) throws Exception{
+		this.putElementValueInCacheContext(this.UIElementFactory.createElement(element), key);
 	}
-
+	
+	@Then("^(?i:Put element) '(.+)' (?i:value with key) '(.+)' (?i:in volatile context)$")
+	public void put_element_value_in_volatile_context(String key, String element) throws Exception{
+		this.putElementValueInVolatileContext(this.UIElementFactory.createElement(element), key);
+	}
+	
+	@Then("^(?i:Put element) '(.+)' (?i:text with key) '(.+)' (?i:in cache context)$")
+	public void put_element_text_in_cache_context(String key, String element) throws Exception{
+		this.putElementTextInCacheContext(this.UIElementFactory.createElement(element), key);
+	}
+	
+	@Then("^(?i:Put element) '(.+)' (?i:text with key) '(.+)' (?i:in volatile context)$")
+	public void put_element_text_in_volatile_context(String key, String element) throws Exception{
+		this.putElementTextInVolatileContext(this.UIElementFactory.createElement(element), key);
+	}
+	
+	@Then("^(?i:Put text) '(.+)' (?i:with key) '(.+)' (?i:in cache context)$")
+	public void put_text_in_cache_context(String text, String key) throws Exception{
+		this.putTextInCacheContext(key,text);
+	}
+	
+	@Then("^(?i:Put text) '(.+)' (?i:with key) '(.+)' (?i:in volatile context)$")
+	public void put_text_in_volatile_context(String text, String key) throws Exception{
+		this.putTextInVolatileContext(key,text);
+	}
+	
+	
 }

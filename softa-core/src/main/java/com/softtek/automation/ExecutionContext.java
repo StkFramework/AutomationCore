@@ -35,4 +35,12 @@ public class ExecutionContext {
 	public void putElement(String key, Object object) {
 		this.volatilContext.put(key, object);
 	}
+	
+	public Map<String, Object> getVolatileContext(){
+		return this.volatilContext;
+	}
+	
+	public Map<String, Object> getCacheContext(){
+		return this.internalCache;
+	}
 }
