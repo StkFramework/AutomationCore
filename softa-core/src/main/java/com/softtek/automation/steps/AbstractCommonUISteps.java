@@ -135,4 +135,9 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.PutTextInVolatileContext(text,key));
 	}
 	
+	protected void clickOnElementWithJS(UIElement uiElement) {
+		assertTrue(UIActions.ClickOnElementWithJS(uiElement));
+		
+	}
+	
 }

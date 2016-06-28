@@ -2,6 +2,7 @@ package com.softtek.automation.actions.selenium;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -13,6 +14,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -20,6 +22,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 import com.google.common.base.Strings;
+import com.softtek.automation.ErrorType;
 import com.softtek.automation.ExecutionContext;
 import com.softtek.automation.ExecutionResult;
 import com.softtek.automation.ExpressionParserAdapter;
@@ -28,6 +31,7 @@ import com.softtek.automation.actions.UIActions;
 import com.softtek.automation.driver.TestDriver;
 import com.softtek.automation.element.How;
 import com.softtek.automation.element.UIElement;
+import com.softtek.automation.logic.AbstractBusinessCase;
 import com.softtek.automation.uiverifications.UIElementsVerification;
 
 /**
@@ -102,6 +106,12 @@ public class SeleniumUIActions implements UIActions {
 
 			}
 
+		}else{
+			
+			executionResult.setMessage(new StringBuilder("Element \"")
+					.append(element.getId())
+					.append("\" is not displayed for clicking.").toString());
+			
 		}
 
 		return executionResult;
@@ -224,6 +234,12 @@ public class SeleniumUIActions implements UIActions {
 
 			}
 
+		}else{
+			
+			executionResult.setMessage(new StringBuilder("Element \"")
+					.append(element.getId())
+					.append("\" is not displayed for type text.").toString());
+			
 		}
 
 		return executionResult;
@@ -248,6 +264,7 @@ public class SeleniumUIActions implements UIActions {
 		Select select = new Select(webElement);
 
 			executionResult.setResult(webElement.isEnabled());
+			
 			if (executionResult.isValidResult()) {
 				
 				String textValue = this.expressionParserAdapter.parseExpression(text, executionContext);
@@ -381,7 +398,7 @@ public class SeleniumUIActions implements UIActions {
 	private WebElement findWebElement(UIElement element) {
 		By by = processBY(element);
 		
-		WebElement webElement = (new WebDriverWait(testDriver.getDriverInstance(),10))
+		WebElement webElement = (new WebDriverWait(testDriver.getDriverInstance(),30))
 				.until(ExpectedConditions.presenceOfElementLocated(by));
 		
 		
@@ -392,7 +409,7 @@ public class SeleniumUIActions implements UIActions {
 	private List<WebElement> findWebElements(UIElement element) {
 		By by = processBY(element);
 		
-		List<WebElement> webElements = (new WebDriverWait(testDriver.getDriverInstance(),10))
+		List<WebElement> webElements = (new WebDriverWait(testDriver.getDriverInstance(),30))
 				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
 		
 		
@@ -491,8 +508,7 @@ public class SeleniumUIActions implements UIActions {
 	private String getAttribute(UIElement uiElement, String attributeType) {
 		ExecutionResult result = new ExecutionResult();
 
-		WebElement webElement = waitForElement(uiElement,
-				findWebElement(uiElement), 30L, result);
+		WebElement webElement = findWebElement(uiElement);
 
 		isElementDisplayed(uiElement, webElement, result);
 		
@@ -1150,26 +1166,55 @@ public class SeleniumUIActions implements UIActions {
 
 	@Override
 	public ExecutionResult ExecuteJS(String script, String ... args) {
+		ExecutionResult executionResult = new ExecutionResult();
 		
+		executionResult.setResult(true);
 		
-		RemoteWebDriver remoteDriver = (RemoteWebDriver)  testDriver.getDriverInstance();
-		
-		Object[] elements = new WebElement[args.length];
-		
-		int i = 0;
-		
-		for(String arg: args){
+		try{
+			RemoteWebDriver remoteDriver = (RemoteWebDriver)  testDriver.getDriverInstance();
 			
-			UIElement uiElement = new UIElement();
-			uiElement.setHow(How.XPATH);
-			uiElement.setUsing(arg);
-			uiElement.setId("Anonymous.element");
-			elements[i] = findWebElement(uiElement);			
+			Object[] elements = new WebElement[args.length];
+			
+			int i = 0;
+			
+			for(String arg: args){
+				
+				UIElement uiElement = new UIElement();
+				uiElement.setHow(How.XPATH);
+				uiElement.setUsing(arg);
+				uiElement.setId("Anonymous.element");
+				elements[i] = findWebElement(uiElement);			
+			}
+			
+			remoteDriver.executeScript(script, elements);
+		}
+		catch(Exception e){
+			executionResult.setErrorType(ErrorType.ERROR);
+			executionResult.setResult(false);
+			executionResult.setMessage("There was an en error when try to perform script " + script + " - "  + e.getMessage() );			
 		}
 		
-		remoteDriver.executeScript(script, elements);
+		
+		return executionResult;
+	}
+	
+	@Override
+	public ExecutionResult ClickOnElementWithJS(UIElement uiElement){		
+		
+		return this.ExecuteJS("arguments[0].click()", uiElement.getUsing());
+	}
+
+	
+	public ExecutionResult RunBusinessCase(String businesCase) {
+		
+		Reflections reflections = new Reflections("com.org.test.business");
+		
+		Set<Class<? extends AbstractBusinessCase>> cases = reflections.getSubTypesOf(AbstractBusinessCase.class);
+		
 		
 		return null;
 	}
+
+	
 		
 }

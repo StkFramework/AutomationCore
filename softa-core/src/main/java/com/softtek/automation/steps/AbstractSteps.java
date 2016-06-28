@@ -2,6 +2,7 @@ package com.softtek.automation.steps;
 
 import org.apache.xalan.xsltc.runtime.Constants;
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.softtek.automation.ConstantsUtils;
 import com.softtek.automation.ExecutionContext;
@@ -9,6 +10,7 @@ import com.softtek.automation.ExecutionResult;
 
 public abstract class AbstractSteps {
 
+	@Autowired
 	protected ExecutionContext ExecutionContext;
 
 	public ExecutionContext getExecutionContext() {

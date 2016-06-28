@@ -23,8 +23,7 @@
 		<property name="testDriver" ref="testDriver" />	
 		<property name="UIElementsVerification" ref="UIElementsVerification"/>	
 		<property name="executionContext" ref="ExecutionContext"/>
-		<property name="expressionParserAdapter" ref="expressionParserAdapter"/>		
-					
+		<property name="expressionParserAdapter" ref="expressionParserAdapter"/>						
 	</bean>
 	
 	<bean id ="expressionParserAdapter"  class="com.softtek.automation.ExpressionParserAdapter" scope="singleton"></bean>	

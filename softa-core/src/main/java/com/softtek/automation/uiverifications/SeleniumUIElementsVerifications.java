@@ -71,11 +71,15 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 
 				isElementDisplayed(element, webElement, executionResult,view);		
 				
-				if(!executionResult.isValidResult()){
+				if(!executionResult.isValidResult()){					
 					break;
+				}else{					
+					executionResult.setMessage(new StringBuilder("Element \"")
+							.append(element.getId())
+							.append("\" is not displayed for type text.").toString());
 				}				
 			
-			}else{
+			}else{				
 				break;
 			}
 					
@@ -167,7 +171,7 @@ public class SeleniumUIElementsVerifications implements UIElementsVerification{
 		
 		try{
 			
-			webElement = (new WebDriverWait(testDriver.getDriverInstance(),10))
+			webElement = (new WebDriverWait(testDriver.getDriverInstance(),30))
 					.until(ExpectedConditions.presenceOfElementLocated(by));
 		
 		}catch(NoSuchElementException e){

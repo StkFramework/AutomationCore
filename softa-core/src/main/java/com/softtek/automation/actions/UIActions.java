@@ -116,6 +116,7 @@ public interface UIActions extends Actions {
 	public ExecutionResult ExecuteJS(String script, String ... args);
 
 	public ExecutionResult SelectValueFromDropdownElement(String xpath,	String[] params, String value);
-
+	
+	public ExecutionResult ClickOnElementWithJS(UIElement uiElement);
 		
 }

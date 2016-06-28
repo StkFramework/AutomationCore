@@ -1,12 +1,20 @@
 package com.softtek.automation.steps.cucumber;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import com.softtek.automation.element.UIElement;
+import com.softtek.automation.logic.AbstractBusinessCase;
 import com.softtek.automation.steps.AbstractCommonUISteps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
+public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps implements ApplicationContextAware {
+	
+	private ApplicationContext applicationContext;
 
 	@When("^(?i:I click on) '(.+)'$")
 	public void i_click_on_element(String element) throws Exception {		
@@ -115,12 +123,12 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 	}
 	
 	@Then("^(?i:Put element) '(.+)' (?i:text with key) '(.+)' (?i:in cache context)$")
-	public void put_element_text_in_cache_context(String key, String element) throws Exception{
+	public void put_element_text_in_cache_context(String element,String key) throws Exception{
 		this.putElementTextInCacheContext(this.UIElementFactory.createElement(element), key);
 	}
 	
 	@Then("^(?i:Put element) '(.+)' (?i:text with key) '(.+)' (?i:in volatile context)$")
-	public void put_element_text_in_volatile_context(String key, String element) throws Exception{
+	public void put_element_text_in_volatile_context(String element, String key) throws Exception{
 		this.putElementTextInVolatileContext(this.UIElementFactory.createElement(element), key);
 	}
 	
@@ -134,5 +142,37 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps {
 		this.putTextInVolatileContext(key,text);
 	}
 	
+	@When("^(?i:I click on) '(.+)' (?i:with JS)$")
+	public void i_click_on_element_with_JS(String element) throws Exception {		
+		this.clickOnElementWithJS(UIElementFactory.createElement(element));		
+	}
+
+	
+	@When("^(?i:Run business case) '(.+)'$")
+	public void run_business_case(String businessCase) throws Exception {		
+		if(applicationContext.containsBean(businessCase)){
+			
+			Object o = applicationContext.getBean(businessCase);
+			
+			if(o instanceof AbstractBusinessCase){
+				
+				AbstractBusinessCase bc = (AbstractBusinessCase) o;
+				bc.run(this.ExecutionContext);
+				
+			}else{
+				assertTrue(false, "ERROR: \""+ businessCase +"\" is not an instance of AbstractBusinessCase");
+			}
+			
+		}	else{			
+			assertTrue(false, "ERROR: BusinessCase \"" + businessCase + "\" doesn't exist in application context");
+		}	
+	}
+	
+	@Override
+	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
+		this.applicationContext = appContext;
+		
+	}
+
 	
 }
