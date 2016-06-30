@@ -1,4 +1,14 @@
+/*=====================================================================================================
+                          LEGAL NOTICE
+------------------------------------------------------------------
+Company Name: Softtek
+Copyright Legend: © 2016 Softtek, Publisher.  All rights reserved.
+No part of this publication may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, 
+mechanical, photocopy, recording or otherwise, without the prior written consent of the Publisher 
+------------------------------------------------------------------
+*/
 /*
+
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
