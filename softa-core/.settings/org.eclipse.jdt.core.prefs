@@ -1,9 +1,0 @@
-#Fri May 20 12:56:15 PDT 2016
-org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.7
-eclipse.preferences.version=1
-encoding/src/main/java=ISO-8859-1
-org.eclipse.jdt.core.compiler.source=1.7
-encoding/src/test/resources=ISO-8859-1
-encoding/src/main/resources=ISO-8859-1
-encoding/src/test/java=ISO-8859-1
-org.eclipse.jdt.core.compiler.compliance=1.7
