@@ -36,5 +36,12 @@ public interface AppActions extends Actions {
 	ExecutionResult WaitForSeconds(String seconds) throws Exception;
 
 	ExecutionResult MoveToUrl(String name) throws Exception;
-
+	
+	ExecutionResult MoveToFrame(String name) throws Exception;
+	
+	ExecutionResult MoveToDefaultContent() throws Exception;
+	
+	ExecutionResult MoveToWindow(String index) throws Exception;
+	
+	
 }

@@ -48,4 +48,19 @@ public class AbstractCommonAppSteps extends AbstractSteps {
 		assertTrue(AppActions.WaitForSeconds(seconds));
 	}
 	
+	public void moveToFrame(String name) throws Exception {
+		assertTrue(AppActions.MoveToFrame(name));
+
+	}
+
+	public void moveToDefaultContent() throws Exception {
+		assertTrue(AppActions.MoveToDefaultContent());
+
+	}
+
+	public void moveToWindow(String index) throws Exception {
+		assertTrue(AppActions.MoveToWindow(index));
+	}
+	
+	
 }

@@ -36,4 +36,21 @@ public class CucumberCommonAppStepsAdapter extends AbstractCommonAppSteps {
 	public void i_close_current_application() {
 		this.closeCurrentApp();;
 	}
+	
+	@When("^(?i:I move to frame) '(.+)'$")
+	public void i_move_to_frame(String name)throws Exception {
+		this.moveToFrame(name);
+	}
+	
+	@When("^(?i:I move to default content)$")
+	public void i_move_to_default_content() throws Exception {
+		this.moveToDefaultContent();
+	}
+	
+	@When("^(?i:I move to window) '(.+)'$")
+	public void i_move_to_window(String index)throws Exception {
+		this.moveToWindow(index);
+	}
+	
+	
 }

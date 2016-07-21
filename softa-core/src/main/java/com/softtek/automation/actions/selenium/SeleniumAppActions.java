@@ -11,6 +11,7 @@ package com.softtek.automation.actions.selenium;
 
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -149,7 +150,6 @@ public class SeleniumAppActions implements AppActions {
 		return new ExecutionResult(true,null);
 	}
 	
-	//Adding this method just to verify UIActions Complex -- You can deleted any time
 	@Override
 	public ExecutionResult MoveToUrl(String url) throws Exception {
 		ExecutionResult result = new ExecutionResult();
@@ -158,5 +158,54 @@ public class SeleniumAppActions implements AppActions {
 		return result;
 	}
 
+	@Override
+	public ExecutionResult MoveToFrame(String name) throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		testDriver.getDriverInstance().switchTo().frame(name);		
+		return result;
+	}
+
+	@Override
+	public ExecutionResult MoveToDefaultContent() throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		testDriver.getDriverInstance().switchTo().defaultContent();		
+		return result;
+	}
+
+	@Override
+	public ExecutionResult MoveToWindow(String index) throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		testDriver.getDriverInstance().switchTo().window(index);		
+		return result;
+	}
+	
+	
+	public ExecutionResult DoAcceptInAlert() throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		Alert alert = testDriver.getDriverInstance().switchTo().alert();		
+		alert.accept();
+		return result;
+	}
+	
+	public ExecutionResult DoDismissInAlert() throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		Alert alert = testDriver.getDriverInstance().switchTo().alert();		
+		alert.dismiss();				
+		return result;
+	}
+	
+	public ExecutionResult GetTextFromAlert() throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		Alert alert = testDriver.getDriverInstance().switchTo().alert();		
+		result.setObjectResult(alert.getText());				
+		return result;
+	}
+	
+	public ExecutionResult TypeTextInAlert(String text) throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		Alert alert = testDriver.getDriverInstance().switchTo().alert();		
+		alert.sendKeys(text);				
+		return result;
+	}
 	
 }
