@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -1106,6 +1107,21 @@ public class SeleniumUIActions implements UIActions {
 	}
 	
 	@Override
+	public ExecutionResult GetTextInCacheContext(String key) {
+		ExecutionResult result = new ExecutionResult();		
+		String text = executionContext.getElement(key).toString();	
+		System.out.println(text);
+		result.setObjectResult(text);
+	//	result.getMessage().toString();
+		return result;
+		
+		
+	//	executionContext.getElement(key);
+	//	return new ExecutionResult(true, null);
+		
+	}
+	
+	@Override
 	public ExecutionResult CountElements(String xpath, String[] params) {
 		// TODO Auto-generated method stub
 		return this.CountElements(createUIElementFromXpath(xpath, params));
@@ -1223,6 +1239,8 @@ public class SeleniumUIActions implements UIActions {
 		
 		return null;
 	}
+
+	
 
 	
 		

@@ -151,6 +151,13 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps implemen
 		this.putTextInVolatileContext(key,text);
 	}
 	
+	@Then("^(?i:Get text) (?i:with key) '(.+)' (?i:in cache context)$")
+	public void get_text_in_cache_context(String key) throws Exception{
+		this.getTextInCacheContext(key);
+	}
+	
+	
+
 	@When("^(?i:I click on) '(.+)' (?i:with JS)$")
 	public void i_click_on_element_with_JS(String element) throws Exception {		
 		this.clickOnElementWithJS(UIElementFactory.createElement(element));		

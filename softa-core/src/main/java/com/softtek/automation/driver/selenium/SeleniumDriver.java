@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -99,10 +100,18 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 					webDriver = new InternetExplorerDriver(capabilities);
 				}
 				else if (browser.equals(CHROME)) {
+					ChromeOptions options = new ChromeOptions();
+					options.addArguments("start-maximized");
+					options.addArguments("disable-extensions");
 					System.setProperty("webdriver.chrome.driver",
 							"src/main/resources/drivers/chromedriver.exe");
-					capabilities = DesiredCapabilities.chrome();					
-					webDriver = new ChromeDriver(capabilities);
+					
+					//ChromeOptions options = new ChromeOptions();
+					capabilities = DesiredCapabilities.chrome();
+					capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+					webDriver = new ChromeDriver(options);
+				//	capabilities = DesiredCapabilities.chrome();					
+				//	webDriver = new ChromeDriver(capabilities);
 				}
 				else {
 					throw new IllegalArgumentException("Browser is not supported");

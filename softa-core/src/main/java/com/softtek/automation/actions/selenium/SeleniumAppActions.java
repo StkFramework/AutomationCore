@@ -179,7 +179,7 @@ public class SeleniumAppActions implements AppActions {
 		return result;
 	}
 	
-	
+	@Override
 	public ExecutionResult DoAcceptInAlert() throws Exception {
 		ExecutionResult result = new ExecutionResult();		
 		Alert alert = testDriver.getDriverInstance().switchTo().alert();		
@@ -193,7 +193,7 @@ public class SeleniumAppActions implements AppActions {
 		alert.dismiss();				
 		return result;
 	}
-	
+	@Override
 	public ExecutionResult GetTextFromAlert() throws Exception {
 		ExecutionResult result = new ExecutionResult();		
 		Alert alert = testDriver.getDriverInstance().switchTo().alert();		

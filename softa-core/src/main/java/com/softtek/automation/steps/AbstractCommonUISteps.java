@@ -144,6 +144,11 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.PutTextInVolatileContext(text,key));
 	}
 	
+	protected String getTextInCacheContext(String key){
+		
+		return UIActions.GetTextInCacheContext(key).toString();
+	}
+	
 	protected void clickOnElementWithJS(UIElement uiElement) {
 		assertTrue(UIActions.ClickOnElementWithJS(uiElement));
 		

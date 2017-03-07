@@ -72,6 +72,8 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult PutTextInVolatileContext(String text, String key);
 	
+	public ExecutionResult GetTextInCacheContext(String key);
+	
 	/*
 	 *Overload actions 
 	 */
@@ -127,5 +129,7 @@ public interface UIActions extends Actions {
 	public ExecutionResult SelectValueFromDropdownElement(String xpath,	String[] params, String value);
 	
 	public ExecutionResult ClickOnElementWithJS(UIElement uiElement);
+
+	
 		
 }

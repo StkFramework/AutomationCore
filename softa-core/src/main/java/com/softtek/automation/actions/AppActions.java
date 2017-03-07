@@ -42,6 +42,10 @@ public interface AppActions extends Actions {
 	ExecutionResult MoveToDefaultContent() throws Exception;
 	
 	ExecutionResult MoveToWindow(String index) throws Exception;
+
+	ExecutionResult DoAcceptInAlert() throws Exception;
+
+	ExecutionResult GetTextFromAlert() throws Exception;
 	
 	
 }

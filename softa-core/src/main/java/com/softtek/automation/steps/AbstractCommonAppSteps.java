@@ -62,5 +62,9 @@ public class AbstractCommonAppSteps extends AbstractSteps {
 		assertTrue(AppActions.MoveToWindow(index));
 	}
 	
+	public String getTextFromAlert() throws Exception {
+		return AppActions.GetTextFromAlert().getMessage();
+	}
+	
 	
 }

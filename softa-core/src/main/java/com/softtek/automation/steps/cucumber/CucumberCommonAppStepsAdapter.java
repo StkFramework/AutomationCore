@@ -9,9 +9,13 @@ mechanical, photocopy, recording or otherwise, without the prior written consent
 */
 package com.softtek.automation.steps.cucumber;
 
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
+
 import com.softtek.automation.ConstantsUtils;
 import com.softtek.automation.steps.AbstractCommonAppSteps;
 
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class CucumberCommonAppStepsAdapter extends AbstractCommonAppSteps {
@@ -52,5 +56,12 @@ public class CucumberCommonAppStepsAdapter extends AbstractCommonAppSteps {
 		this.moveToWindow(index);
 	}
 	
+	
+	@When("^I verify the popup window text '(.+)' and select '(.+)'$")
+	public void i_verify_the_popup_window_text_and_select(String expectedAlertMsg, String btnAction) throws Throwable {
+		String alertMSg = this.getTextFromAlert();
+		System.out.println(alertMSg);
+	}
+
 	
 }
