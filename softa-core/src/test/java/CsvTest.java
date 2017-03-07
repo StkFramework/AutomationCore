@@ -17,11 +17,11 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.jacob.com.LibraryLoader;
+//import com.jacob.com.LibraryLoader;
 import com.softtek.automation.driver.TestDriver;
 import com.softtek.automation.functions.CSVFunctions;
 
-import autoitx4java.AutoItX;
+//import autoitx4java.AutoItX;
 
 
 
@@ -90,7 +90,7 @@ public class CsvTest {
 		 Runtime.getRuntime().exec(command);
 	//	 Process proc1 = Runtime.getRuntime().exec( "C:\\callOne2.exe",cmd);
 	 }
-	 @Ignore
+/*	 @Ignore
 		public void selectImage2Good() throws InterruptedException {
 	    String jacobDllVersionToUse;
 	    if (jvmBitVersion().contains("32")){
@@ -122,12 +122,12 @@ public class CsvTest {
 				}
 		}
 	 }
-	 
+	 */
 	 @Ignore
 	 public void UploadImageRunScript() throws IOException{
 		 Runtime.getRuntime().exec("C:\\test.exe");
 	 }
-	 
+/*	 
 	@Ignore
 	public void selectImage() throws InterruptedException {
 		
@@ -164,5 +164,5 @@ public class CsvTest {
 			}
 	}
 
-}
+}*/
 }
