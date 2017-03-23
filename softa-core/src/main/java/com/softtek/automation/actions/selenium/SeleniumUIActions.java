@@ -294,6 +294,38 @@ public class SeleniumUIActions implements UIActions {
 	}
 	
 	/**
+	 * This method select value option from dropdown element
+	 * 
+	 * @param element The element is where should select the option
+	 * @param text This is the text for the option value
+	 */
+	@Override
+	public ExecutionResult SelectValueOptionFromDropdownElement(UIElement element,
+			int optionNumber) {
+
+		ExecutionResult executionResult = new ExecutionResult();
+
+		WebElement webElement = findWebElement(element);
+
+		isElementDisplayed(element, webElement, executionResult);
+		
+		Select select = new Select(webElement);
+
+			executionResult.setResult(webElement.isEnabled());
+			
+			if (executionResult.isValidResult()) {
+				select.selectByIndex(optionNumber);
+			//	select.deselectByIndex(1);
+			} else {
+				executionResult.setMessage(new StringBuilder("Element \"")
+						.append(element.getId())
+						.append("\" is not enabled for Select.").toString());
+
+			}
+		return executionResult;
+	}
+	
+	/**
 	 * This method verify if the element is enable to perform an action
 	 * 
 	 * @param element The element will be verify to check if it's enable
@@ -1110,10 +1142,23 @@ public class SeleniumUIActions implements UIActions {
 	public ExecutionResult GetTextInCacheContext(String key) {
 		ExecutionResult result = new ExecutionResult();		
 		String text = executionContext.getElement(key).toString();	
-		System.out.println(text);
 		result.setObjectResult(text);
 	//	result.getMessage().toString();
 		return result;
+		
+		
+	//	executionContext.getElement(key);
+	//	return new ExecutionResult(true, null);
+		
+	}
+	
+	@Override
+	public String GetStringTextInCacheContext(String key) {
+	//	ExecutionResult result = new ExecutionResult();		
+		String text = executionContext.getElement(key).toString();	
+	//	result.setObjectResult(text);
+	//	result.getMessage().toString();
+		return text;
 		
 		
 	//	executionContext.getElement(key);

@@ -23,6 +23,8 @@ public interface UIActions extends Actions {
 	public ExecutionResult TypeTextOn(UIElement element, String text);
 
 	public ExecutionResult SelectValueFromDropdownElement(UIElement createElement, String text);
+	
+	public ExecutionResult SelectValueOptionFromDropdownElement(UIElement createElement, int optionNumber);
 
 	public ExecutionResult IsDisabled(UIElement element);
 	
@@ -73,6 +75,8 @@ public interface UIActions extends Actions {
 	public ExecutionResult PutTextInVolatileContext(String text, String key);
 	
 	public ExecutionResult GetTextInCacheContext(String key);
+	
+	public String GetStringTextInCacheContext(String key);
 	
 	/*
 	 *Overload actions 
@@ -129,6 +133,8 @@ public interface UIActions extends Actions {
 	public ExecutionResult SelectValueFromDropdownElement(String xpath,	String[] params, String value);
 	
 	public ExecutionResult ClickOnElementWithJS(UIElement uiElement);
+
+	
 
 	
 		

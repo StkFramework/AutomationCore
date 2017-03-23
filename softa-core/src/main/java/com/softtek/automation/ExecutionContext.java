@@ -38,7 +38,8 @@ public class ExecutionContext {
 	}
 
 	public Object getElement(String key) {
-		return this.volatilContext.remove(key);
+		return this.volatilContext.get(key);
+		//return this.volatilContext.remove(key);
 	}
 
 	public void putElement(String key, Object object) {

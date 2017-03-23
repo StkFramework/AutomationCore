@@ -121,6 +121,12 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps implemen
 		this.selectValueFromDropdownElement(this.UIElementFactory.createElement(element), value);
 	}	
 	
+	@Then("^(?i:Select the) '(.+)' option (?i:from dropdown) '(.+)'$")
+	public void select_value_option_from_dropdown_element(int value, String element) throws Exception{
+		System.out.println(value);
+		this.selectValueOptionFromDropdownElement(this.UIElementFactory.createElement(element), value);
+	}	
+	
 	@Then("^(?i:Put element) '(.+)' (?i:value with key) '(.+)' (?i:in cache context)$")
 	public void put_element_value_in_cache_context(String key, String element) throws Exception{
 		this.putElementValueInCacheContext(this.UIElementFactory.createElement(element), key);
@@ -154,6 +160,11 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps implemen
 	@Then("^(?i:Get text) (?i:with key) '(.+)' (?i:in cache context)$")
 	public void get_text_in_cache_context(String key) throws Exception{
 		this.getTextInCacheContext(key);
+	}
+	
+	@Then("^(?i:I type text with key) '(.+)' (?i:on element) '(.+)' (?i:using cache context)$")
+	public void i_type_text_with_key_on_element_using_cache_context(String key, String element) throws Exception{
+		this.typeTextOn(this.UIElementFactory.createElement(element), this.getStringTextInCacheContext(key).toString());
 	}
 	
 	

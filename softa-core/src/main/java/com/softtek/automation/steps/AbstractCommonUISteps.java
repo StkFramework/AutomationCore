@@ -108,11 +108,16 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		assertTrue(UIActions.VerifyUI(UIView));
 	}
 	
-	protected void selectValueFromDropdownElement(UIElement element, String value){
+	protected void selectValueFromDropdownElement(UIElement element, String optionNumber){
 		
-		assertTrue(UIActions.SelectValueFromDropdownElement(element, value));		
+		assertTrue(UIActions.SelectValueFromDropdownElement(element, optionNumber));		
 	}
 		
+	protected void selectValueOptionFromDropdownElement(UIElement element, int value){
+		
+		assertTrue(UIActions.SelectValueOptionFromDropdownElement(element, value));		
+	}
+
 	protected void putElementValueInCacheContext(UIElement element, String key){
 		
 		assertTrue(UIActions.PutElementValueInCacheContext(element, key));
@@ -147,6 +152,11 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 	protected String getTextInCacheContext(String key){
 		
 		return UIActions.GetTextInCacheContext(key).toString();
+	}
+	
+	protected String getStringTextInCacheContext(String key){
+		
+		return UIActions.GetStringTextInCacheContext(key).toString();
 	}
 	
 	protected void clickOnElementWithJS(UIElement uiElement) {

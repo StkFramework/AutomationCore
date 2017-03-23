@@ -10,6 +10,7 @@ mechanical, photocopy, recording or otherwise, without the prior written consent
 package com.softtek.automation.driver.selenium;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -101,15 +103,30 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 				}
 				else if (browser.equals(CHROME)) {
 					ChromeOptions options = new ChromeOptions();
+					
+					String downloadFilepath = "c:\\tmp";
+					HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+					chromePrefs.put("profile.default_content_settings.popups", 0);
+					chromePrefs.put("download.default_directory", downloadFilepath);
+
+					options.setExperimentalOption("prefs", chromePrefs);
+					capabilities = DesiredCapabilities.chrome();
+
+					capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+
+					
+					
+					
+					
 					options.addArguments("start-maximized");
 					options.addArguments("disable-extensions");
 					System.setProperty("webdriver.chrome.driver",
 							"src/main/resources/drivers/chromedriver.exe");
 					
 					//ChromeOptions options = new ChromeOptions();
-					capabilities = DesiredCapabilities.chrome();
+					
 					capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-					webDriver = new ChromeDriver(options);
+					webDriver = new ChromeDriver(capabilities);
 				//	capabilities = DesiredCapabilities.chrome();					
 				//	webDriver = new ChromeDriver(capabilities);
 				}

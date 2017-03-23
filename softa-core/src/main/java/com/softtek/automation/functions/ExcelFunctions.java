@@ -11,6 +11,7 @@ package com.softtek.automation.functions;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,9 +29,9 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 
-
-
+@Component
 public class ExcelFunctions {
 	
 	/**
@@ -244,6 +245,14 @@ public class ExcelFunctions {
 			return false;
 		}
 		return true;
+	}
+
+	public int getRow(final String file, final String commonSheetName) throws IOException {
+		final FileInputStream fis = new FileInputStream(new File(file));
+		final XSSFWorkbook workbook = new XSSFWorkbook(fis);
+		final XSSFSheet sheet = workbook.getSheet(commonSheetName);
+		final int rowNum = sheet.getLastRowNum() + 1;
+		return rowNum;
 	}
 
 
