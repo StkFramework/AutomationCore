@@ -200,6 +200,12 @@ public class CucumberCommonUIStepsAdapter extends AbstractCommonUISteps implemen
 		this.applicationContext = appContext;
 		
 	}
+	
+	@When("^(?i:I click on) '(.+)' (?i:with Action Performance)$")
+	public void i_click_on_element_with_action_performance(String element) throws Exception {		
+		this.clickOnElementWithActionPerformance(UIElementFactory.createElement(element));		
+	}
+
 
 	
 }

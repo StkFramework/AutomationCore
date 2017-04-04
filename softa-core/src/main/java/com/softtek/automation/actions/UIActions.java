@@ -134,6 +134,7 @@ public interface UIActions extends Actions {
 	
 	public ExecutionResult ClickOnElementWithJS(UIElement uiElement);
 
+	public ExecutionResult ClickOnElementWithActionPerformance(UIElement uiElement);
 	
 
 	

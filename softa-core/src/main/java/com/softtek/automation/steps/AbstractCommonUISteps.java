@@ -164,4 +164,8 @@ public abstract class AbstractCommonUISteps extends AbstractSteps {
 		
 	}
 	
+	protected void clickOnElementWithActionPerformance(UIElement element) {
+		assertTrue(UIActions.ClickOnElementWithActionPerformance(element));
+	}
+	
 }

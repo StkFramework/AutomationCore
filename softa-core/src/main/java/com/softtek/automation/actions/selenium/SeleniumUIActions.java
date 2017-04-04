@@ -19,6 +19,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -1284,9 +1285,41 @@ public class SeleniumUIActions implements UIActions {
 		
 		return null;
 	}
-
 	
+	@Override
+	public ExecutionResult ClickOnElementWithActionPerformance(UIElement element){		
+		ExecutionResult executionResult = new ExecutionResult();
+		Actions action = new Actions(testDriver.getDriverInstance());
 
+		WebElement webElement = findWebElement(element);
+
+		isElementDisplayed(element, webElement, executionResult);
+
+		if (executionResult.isValidResult()) {
+
+			executionResult.setResult(webElement.isEnabled());
+
+			if (executionResult.isValidResult()) {
+			//	new Actions(driver.getDriverInstance()).moveToElement(input).click().perform();
+				action.moveToElement(webElement).click().perform();
+			//	webElement.click()
+			} else {
+				executionResult.setMessage(new StringBuilder("Element \"")
+						.append(element.getId())
+						.append("\" is not enabled for clicking.").toString());
+
+			}
+
+		}else{
+			
+			executionResult.setMessage(new StringBuilder("Element \"")
+					.append(element.getId())
+					.append("\" is not displayed for clicking.").toString());
+			
+		}
+
+		return executionResult;
+	}
 	
 		
 }
