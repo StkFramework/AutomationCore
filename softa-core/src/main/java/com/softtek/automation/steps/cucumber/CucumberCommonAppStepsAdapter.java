@@ -46,6 +46,11 @@ public class CucumberCommonAppStepsAdapter extends AbstractCommonAppSteps {
 		this.moveToFrame(name);
 	}
 	
+	@When("^(?i:I move to id frame) '(.+)'$")
+	public void i_move_to_id_frame(String id)throws Exception {
+		this.moveToIdFrame(id);
+	}
+	
 	@When("^(?i:I move to default content)$")
 	public void i_move_to_default_content() throws Exception {
 		this.moveToDefaultContent();

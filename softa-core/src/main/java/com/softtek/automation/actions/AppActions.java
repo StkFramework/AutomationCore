@@ -39,6 +39,8 @@ public interface AppActions extends Actions {
 	
 	ExecutionResult MoveToFrame(String name) throws Exception;
 	
+	ExecutionResult MoveToIdFrame(String name) throws Exception;
+	
 	ExecutionResult MoveToDefaultContent() throws Exception;
 	
 	ExecutionResult MoveToWindow(String index) throws Exception;

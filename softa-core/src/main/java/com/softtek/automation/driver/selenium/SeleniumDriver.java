@@ -120,6 +120,18 @@ public class SeleniumDriver implements TestDriver<org.openqa.selenium.WebDriver>
 					
 					options.addArguments("start-maximized");
 					options.addArguments("disable-extensions");
+					 options.addArguments("--allow-file-access-from-files",
+                             "--use-fake-ui-for-media-stream",
+                             "--allow-file-access",
+                             "--use-file-for-fake-video-capture=c:/video/example2.y4m",
+                             "--use-fake-device-for-media-stream");
+ 
+					
+					
+				//	options.addArguments("allow-file-access-from-files");
+				//	options.addArguments("use-fake-device-for-media-stream");
+				//	options.addArguments("allow-file-access-from-files");
+					//Soptions.addArguments("--use-file-for-fake-video-capture=C:/video/example2.y4m");
 					System.setProperty("webdriver.chrome.driver",
 							"src/main/resources/drivers/chromedriver.exe");
 					

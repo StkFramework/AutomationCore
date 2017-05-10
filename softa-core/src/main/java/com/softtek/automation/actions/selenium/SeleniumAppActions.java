@@ -12,6 +12,7 @@ package com.softtek.automation.actions.selenium;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -162,6 +163,13 @@ public class SeleniumAppActions implements AppActions {
 	public ExecutionResult MoveToFrame(String name) throws Exception {
 		ExecutionResult result = new ExecutionResult();		
 		testDriver.getDriverInstance().switchTo().frame(name);		
+		return result;
+	}
+	
+	@Override
+	public ExecutionResult MoveToIdFrame(String id) throws Exception {
+		ExecutionResult result = new ExecutionResult();		
+		testDriver.getDriverInstance().switchTo().frame(testDriver.getDriverInstance().findElement(By.xpath(".//*[@id='"+id+"'][1]")));		
 		return result;
 	}
 

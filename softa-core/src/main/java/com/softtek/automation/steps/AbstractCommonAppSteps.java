@@ -52,6 +52,11 @@ public class AbstractCommonAppSteps extends AbstractSteps {
 		assertTrue(AppActions.MoveToFrame(name));
 
 	}
+	
+	public void moveToIdFrame(String id) throws Exception {
+		assertTrue(AppActions.MoveToIdFrame(id));
+
+	}
 
 	public void moveToDefaultContent() throws Exception {
 		assertTrue(AppActions.MoveToDefaultContent());
