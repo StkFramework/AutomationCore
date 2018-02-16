@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -66,6 +67,35 @@ public class ExcelFunctions {
 	 * @return String
 	 */
 	public String obtainCellValue(final Sheet sheet, final String cell) {
+		String cellValue = "";
+		final CellReference ref = new CellReference(cell);
+		final Row r = sheet.getRow(ref.getRow());
+		if (r != null) {
+			final Cell c = r.getCell(ref.getCol());
+			if (c.getCellType() == 2) {
+				cellValue =
+						""
+								+ sheet.getWorkbook().getCreationHelper().createFormulaEvaluator().evaluate(c)
+										.getNumberValue();
+			}
+			else {
+				cellValue = c.toString();
+			}
+		}
+		return cellValue;
+	}
+	
+	/**
+	 * Method to obtain a the value of specific cell
+	 * @param sheet
+	 * @param cell
+	 * @return String
+	 * @throws IOException 
+	 */
+	public String obtainCellValue(final String fileName, final String commonSheetName, final String cell) throws IOException {
+		final XSSFWorkbook workbook = this.getWoorkbookFromFile(fileName);
+
+		final XSSFSheet sheet = workbook.getSheet(commonSheetName);
 		String cellValue = "";
 		final CellReference ref = new CellReference(cell);
 		final Row r = sheet.getRow(ref.getRow());
@@ -255,5 +285,61 @@ public class ExcelFunctions {
 		return rowNum;
 	}
 
+	public int getLastRow(final String file1, final String commonSheetName) throws IOException{
+		final XSSFWorkbook workbook1 = this.getWoorkbookFromFile(file1);
+		final XSSFSheet ws = workbook1.getSheet(commonSheetName);
+		return ws.getLastRowNum() + 1;
+	}
+	
+	public void writeExcel(List<Users> listBook, String excelFilePath, String commonSheetName) throws IOException {
+		final XSSFWorkbook workbook = this.getWoorkbookFromFile(excelFilePath);
+		final XSSFSheet ws1 = workbook.getSheet(commonSheetName);
+	//    Workbook workbook = new HSSFWorkbook();
+	//    Sheet sheet = workbook.createSheet();
+	    
+	 
+	    int rowCount = ws1.getLastRowNum()+1;
+	    
+	    Row row = ws1.createRow(rowCount);
+	    
+	 //   XSSFRow row = (XSSFRow) ws1.getRow(rowCount);
+	    System.out.println("Row:"+rowCount);
+	 
+	    for (Users aBook : listBook) {
+	        writeBook(aBook, row);
+	    //    row = ws1.createRow(++rowCount);
+	    }
+	 
+	    try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
+	        workbook.write(outputStream);
+	    }
+	}
+	
+	private void writeBook(Users aBook, Row row) {
+		
+	    Cell cell = row.createCell(0);
+	    cell.setCellValue(aBook.getName1stLevel());
+	 
+	    cell = row.createCell(1);
+	    cell.setCellValue(aBook.getName2ndLevel());
+	    
+	    cell = row.createCell(2);
+	    cell.setCellValue(aBook.getRole());
+	 
+	    cell = row.createCell(3);
+	    cell.setCellValue(aBook.getLocation());
+	    
+	    cell = row.createCell(4);
+	    cell.setCellValue(aBook.getArea());
+	    
+	    cell = row.createCell(5);
+	    cell.setCellValue(aBook.getPhone());
+	 
+	    cell = row.createCell(6);
+	    cell.setCellValue(aBook.getExt());
+	    
+	    cell = row.createCell(7);
+	    cell.setCellValue(aBook.getEmail());
+	}
 
 }
